@@ -1,0 +1,428 @@
+{
+ "_comment": "Main-process (Electron) string literals: exact source text -> replacement, per file in app.asar. count = required number of matches.",
+ "files": {
+  "dist/main.js": [
+   {
+    "from": "`language_server binary not found at:\\n${languageServer_1.LS_BINARY}\\n\\nPlease build set a valid location.`",
+    "to": "`找不到 language_server 程序：\\n${languageServer_1.LS_BINARY}\\n\\n请重新安装 Antigravity。`"
+   },
+   {
+    "from": "showErrorBox('Binary not found', msg)",
+    "to": "showErrorBox('找不到程序文件', msg)"
+   },
+   {
+    "from": "title: 'WSL distro not found',",
+    "to": "title: '找不到 WSL 发行版',"
+   },
+   {
+    "from": "message: `The WSL distro \"${WSL_DISTRO}\" is no longer installed.`,",
+    "to": "message: `WSL 发行版“${WSL_DISTRO}”已不存在。`,"
+   },
+   {
+    "from": "detail: 'Antigravity opened on Windows instead.',",
+    "to": "detail: 'Antigravity 已改为在 Windows 上打开。',"
+   },
+   {
+    "from": "`Failed to install the server into WSL distro \"${WSL_DISTRO}\":\\n${err.message}`",
+    "to": "`无法把服务端安装到 WSL 发行版“${WSL_DISTRO}”：\\n${err.message}`"
+   },
+   {
+    "from": "showErrorBox('WSL setup failed', msg)",
+    "to": "showErrorBox('WSL 设置失败', msg)"
+   },
+   {
+    "from": "showErrorBox('Startup failed', msg)",
+    "to": "showErrorBox('启动失败', msg)"
+   },
+   {
+    "from": "label: 'No agents running',",
+    "to": "label: '没有正在运行的智能体',"
+   },
+   {
+    "from": "label: `Open ${electron_1.app.getName()}`,",
+    "to": "label: `打开 ${electron_1.app.getName()}`,"
+   },
+   {
+    "from": "label: 'Quit',",
+    "to": "label: '退出',"
+   },
+   {
+    "from": "buttons: ['Cancel', 'Quit'],",
+    "to": "buttons: ['取消', '退出'],"
+   },
+   {
+    "from": "title: 'Confirm Quit',",
+    "to": "title: '确认退出',"
+   },
+   {
+    "from": "message: 'Are you sure you want to quit?',",
+    "to": "message: '确定要退出吗？',"
+   },
+   {
+    "from": "detail: 'There may be agents or background tasks running.',",
+    "to": "detail: '可能还有智能体或后台任务在运行。',"
+   }
+  ],
+  "dist/tray.js": [
+   {
+    "from": "            countItem.label =\n                (count > 0 ? `${count}` : 'No') +\n                    ' agent' +\n                    (count === 1 ? '' : 's') +\n                    ' running';",
+    "to": "            countItem.label = count > 0 ? `${count} 个智能体正在运行` : '没有正在运行的智能体';"
+   }
+  ],
+  "dist/menu.js": [
+   {
+    "from": "return { label: 'Connect to WSL', submenu };",
+    "to": "return { label: '连接到 WSL', submenu };"
+   },
+   {
+    "from": "return { label: 'Reopen Locally', click: () => relaunchWithWslDistro('') };",
+    "to": "return { label: '在本机重新打开', click: () => relaunchWithWslDistro('') };"
+   }
+  ],
+  "dist/ipcHandlers.js": [
+   {
+    "from": "showErrorBox('Cannot open folder', t.error)",
+    "to": "showErrorBox('无法打开文件夹', t.error)"
+   },
+   {
+    "from": "message: 'Folder is on the Windows filesystem',",
+    "to": "message: '文件夹位于 Windows 文件系统中',"
+   },
+   {
+    "from": "title: 'Open workspace',",
+    "to": "title: '打开工作区',"
+   },
+   {
+    "from": "title: 'Open workspaces',",
+    "to": "title: '打开工作区',"
+   },
+   {
+    "from": "title: 'Select Download Folder',",
+    "to": "title: '选择下载文件夹',"
+   }
+  ],
+  "dist/wsl.js": [
+   {
+    "from": "error: `This folder belongs to the WSL distro \"${unc[1]}\", but this window is connected to \"${distro}\".`,",
+    "to": "error: `此文件夹属于 WSL 发行版“${unc[1]}”，但当前窗口连接的是“${distro}”。`,"
+   },
+   {
+    "from": "warning: 'This folder is on the Windows filesystem. Accessing it from WSL (via /mnt) can be slow — for best performance keep projects inside the WSL filesystem.',",
+    "to": "warning: '此文件夹位于 Windows 文件系统中。从 WSL（通过 /mnt）访问可能较慢，想要最佳性能，请把项目放在 WSL 文件系统内。',"
+   },
+   {
+    "from": "return { error: `This location cannot be opened in WSL: ${winPath}` };",
+    "to": "return { error: `无法在 WSL 中打开此位置：${winPath}` };"
+   },
+   {
+    "from": "onStatus?.('Downloading the Antigravity binary\\u2026');",
+    "to": "onStatus?.('正在下载 Antigravity 程序\\u2026');"
+   },
+   {
+    "from": "onStatus?.(`Installing into ${distro}\\u2026`);",
+    "to": "onStatus?.(`正在安装到 ${distro}\\u2026`);"
+   }
+  ],
+  "dist/provisionSplash.js": [
+   {
+    "from": "<div>Setting up WSL: ${escapeHtml(distro)}</div>",
+    "to": "<div>正在设置 WSL：${escapeHtml(distro)}</div>"
+   }
+  ],
+  "dist/updater.js": [
+   {
+    "from": "title: 'Check for Updates',",
+    "to": "title: '检查更新',",
+    "count": 1
+   },
+   {
+    "from": "message: 'No updates available',",
+    "to": "message: '没有可用的更新',"
+   },
+   {
+    "from": "buttons: ['OK'],",
+    "to": "buttons: ['确定'],"
+   }
+  ],
+  "dist/deviceChooser.js": [
+   {
+    "from": "hid: 'HID device',",
+    "to": "hid: 'HID 设备',"
+   },
+   {
+    "from": "usb: 'USB device',",
+    "to": "usb: 'USB 设备',"
+   },
+   {
+    "from": "serial: 'serial port',",
+    "to": "serial: '串口',"
+   },
+   {
+    "from": "'Unknown device'",
+    "to": "'未知设备'",
+    "count": 2
+   },
+   {
+    "from": "title: 'Connect a device',",
+    "to": "title: '连接设备',"
+   },
+   {
+    "from": "message: `${origin} wants to connect to a ${KIND_NOUNS[kind]}`,",
+    "to": "message: `${origin} 想要连接${KIND_NOUNS[kind]}`,"
+   },
+   {
+    "from": "? 'Select a device:'",
+    "to": "? '选择设备：'"
+   },
+   {
+    "from": ": 'No compatible devices found.',",
+    "to": ": '没有找到兼容的设备。',"
+   },
+   {
+    "from": "buttons: [...snapshot.map(({ label }) => label), 'Cancel'],",
+    "to": "buttons: [...snapshot.map(({ label }) => label), '取消'],"
+   }
+  ],
+  "dist/webauthn.js": [
+   {
+    "from": "const rpLabel = details.relyingPartyId || 'this site';",
+    "to": "const rpLabel = details.relyingPartyId || '此网站';"
+   },
+   {
+    "from": "title: 'Choose a Passkey',",
+    "to": "title: '选择通行密钥',"
+   },
+   {
+    "from": "message: `Sign in to ${rpLabel}`,",
+    "to": "message: `登录 ${rpLabel}`,"
+   },
+   {
+    "from": "detail: 'Select a passkey account to continue:',",
+    "to": "detail: '选择一个通行密钥账户以继续：',"
+   },
+   {
+    "from": "buttons: [...accountLabels, 'Cancel'],",
+    "to": "buttons: [...accountLabels, '取消'],"
+   }
+  ],
+  "dist/webviewPopupSecurity.js": [
+   {
+    "from": "insecure: 'Not secure',",
+    "to": "insecure: '不安全',"
+   },
+   {
+    "from": "dangerous: '⚠ Not secure',",
+    "to": "dangerous: '⚠ 不安全',"
+   },
+   {
+    "from": "'Your connection to this site is not secure',",
+    "to": "'你与此网站之间的连接不安全',"
+   },
+   {
+    "from": "'You should not enter any sensitive information on this site (for ' +\n        'example, passwords or credit cards), because it could be stolen by ' +\n        'attackers.',",
+    "to": "'请勿在此网站上输入任何敏感信息（例如密码或信用卡信息），因为攻击者可能会盗取这些信息。',"
+   },
+   {
+    "from": "'Connection is secure',",
+    "to": "'连接是安全的',"
+   },
+   {
+    "from": "'Your information (for example, passwords or credit card numbers) is ' +\n            'private when it is sent to this site.',",
+    "to": "'你的信息（例如密码或信用卡号）在发送到此网站时是私密的。',"
+   },
+   {
+    "from": "neutral: ['Connection security information is not available for this page'],",
+    "to": "neutral: ['此网页无法提供连接安全信息'],"
+   },
+   {
+    "from": "return ms > 0 ? new Date(ms).toLocaleString() : 'unknown';",
+    "to": "return ms > 0 ? new Date(ms).toLocaleString() : '未知';"
+   },
+   {
+    "from": "state.level === 'secure' ? 'Certificate is valid' : 'Certificate details'",
+    "to": "state.level === 'secure' ? '证书有效' : '证书详情'"
+   },
+   {
+    "from": "lines.push(`Error: ${state.certificateError}`);",
+    "to": "lines.push(`错误：${state.certificateError}`);"
+   },
+   {
+    "from": "lines.push(`Issued to: ${certificate.subjectName}`, `Issued by: ${certificate.issuer}`, `Valid from: ${formatDate(certificate.validFromMs)}`, `Valid until: ${formatDate(certificate.validToMs)}`);",
+    "to": "lines.push(`颁发给：${certificate.subjectName}`, `颁发者：${certificate.issuer}`, `有效期从：${formatDate(certificate.validFromMs)}`, `有效期至：${formatDate(certificate.validToMs)}`);"
+   },
+   {
+    "from": "lines.push(`Protocol: ${certificate.protocol}`);",
+    "to": "lines.push(`协议：${certificate.protocol}`);"
+   },
+   {
+    "from": "message: extractOrigin(state.url) ?? (state.url || 'This page'),",
+    "to": "message: extractOrigin(state.url) ?? (state.url || '此网页'),"
+   },
+   {
+    "from": "{ role: 'cut', enabled: canCut },",
+    "to": "{ role: 'cut', label: '剪切', enabled: canCut },"
+   },
+   {
+    "from": "{ role: 'copy', enabled: canCopy },",
+    "to": "{ role: 'copy', label: '复制', enabled: canCopy },"
+   },
+   {
+    "from": "{ role: 'paste', enabled: canPaste },",
+    "to": "{ role: 'paste', label: '粘贴', enabled: canPaste },"
+   },
+   {
+    "from": "{ role: 'selectAll', enabled: canSelectAll },",
+    "to": "{ role: 'selectAll', label: '全选', enabled: canSelectAll },"
+   },
+   {
+    "from": "label: 'Connection info…',",
+    "to": "label: '连接信息…',"
+   },
+   {
+    "from": "title: 'Connection info',",
+    "to": "title: '连接信息',"
+   },
+   {
+    "from": "buttons: ['OK'],",
+    "to": "buttons: ['确定'],"
+   }
+  ],
+  "dist/remote/remoteManager.js": [
+   {
+    "from": "title: 'Choose an SSH config file',",
+    "to": "title: '选择 SSH 配置文件',"
+   },
+   {
+    "from": "title: 'SSH connection failed',",
+    "to": "title: 'SSH 连接失败',"
+   },
+   {
+    "from": "buttons: ['Stop Server', 'Cancel'],",
+    "to": "buttons: ['停止服务器', '取消'],"
+   },
+   {
+    "from": "title: 'Stop SSH server',",
+    "to": "title: '停止 SSH 服务器',",
+    "count": 2
+   },
+   {
+    "from": "message: `Stop the Antigravity server on ${entry.label}?`,",
+    "to": "message: `要停止 ${entry.label} 上的 Antigravity 服务器吗？`,"
+   },
+   {
+    "from": "detail: 'Agents running on this host will stop and its window will close. ' +\n                    'The server starts again the next time you connect.',",
+    "to": "detail: '此主机上运行的智能体会停止，它的窗口也会关闭。下次连接时服务器会重新启动。',"
+   },
+   {
+    "from": "message: `Not connected to ${label}`,",
+    "to": "message: `未连接到 ${label}`,"
+   },
+   {
+    "from": "detail: 'Reconnect first, then stop its server.',",
+    "to": "detail: '请先重新连接，再停止它的服务器。',"
+   },
+   {
+    "from": "buttons: ['Sign In', 'Cancel'],",
+    "to": "buttons: ['登录', '取消'],"
+   },
+   {
+    "from": "title: 'Sign in',",
+    "to": "title: '登录',"
+   },
+   {
+    "from": "message: `Sign in to your organization for ${entry.label}?`,",
+    "to": "message: `要为 ${entry.label} 登录你的组织账户吗？`,"
+   },
+   {
+    "from": "detail: 'Continue only if you just chose to sign in with your organization ' +\n                `in this window. ${entry.label} will get access to your ` +\n                \"organization's Google Cloud account.\\n\" +",
+    "to": "detail: `只有在你刚刚于此窗口中选择用组织账户登录时才继续。${entry.label} 将获得你所在组织的 Google Cloud 账户的访问权限。\\n` +"
+   },
+   {
+    "from": "? `Workforce pool: ${names[1]}  Provider: ${names[2]}`",
+    "to": "? `员工身份池：${names[1]}  提供方：${names[2]}`"
+   },
+   {
+    "from": ": `Identity provider: ${provider}`",
+    "to": ": `身份提供方：${provider}`"
+   }
+  ],
+  "dist/remote/sshPrompts.js": [
+   {
+    "from": "<div id=\"retry\" class=\"note\" hidden>Asked again: your last answer may not have worked.</div>",
+    "to": "<div id=\"retry\" class=\"note\" hidden>再次询问：你上次的回答可能没有生效。</div>"
+   },
+   {
+    "from": "<div id=\"long\" class=\"note\" hidden>That's too long.</div>",
+    "to": "<div id=\"long\" class=\"note\" hidden>输入太长。</div>"
+   },
+   {
+    "from": "<button id=\"cancel\">Cancel</button><button id=\"continue\">Continue</button>",
+    "to": "<button id=\"cancel\">取消</button><button id=\"continue\">继续</button>"
+   },
+   {
+    "from": "message: confirm ? `${label} asks:` : 'Touch your security key',",
+    "to": "message: confirm ? `${label} 询问：` : '请触碰你的安全密钥',"
+   },
+   {
+    "from": "buttons: confirm ? ['Yes', 'No'] : ['Cancel'],",
+    "to": "buttons: confirm ? ['是', '否'] : ['取消'],"
+   }
+  ],
+  "dist/remote/disconnectedPage.js": [
+   {
+    "from": "const title = connecting ? 'Reconnecting…' : 'Disconnected';",
+    "to": "const title = connecting ? '正在重新连接…' : '已断开连接';"
+   },
+   {
+    "from": "? `Reconnecting to ${host}…`",
+    "to": "? `正在重新连接到 ${host}…`"
+   },
+   {
+    "from": ": `Disconnected from ${host}`;",
+    "to": ": `已与 ${host} 断开连接`;"
+   },
+   {
+    "from": "? `Agents keep running on ${host}.`",
+    "to": "? `智能体会继续在 ${host} 上运行。`"
+   },
+   {
+    "from": ": `Agents keep running on ${host} unless its server stopped.`;",
+    "to": ": `除非 ${host} 上的服务器已停止，否则智能体会继续在那里运行。`;"
+   },
+   {
+    "from": "href=\"${action('reconnect')}\">Reconnect</a>",
+    "to": "href=\"${action('reconnect')}\">重新连接</a>"
+   },
+   {
+    "from": "href=\"${action('close')}\">Close</a>",
+    "to": "href=\"${action('close')}\">关闭</a>"
+   }
+  ],
+  "dist/ideInstall/wizardHtml.js": [
+   {
+    "from": "<title>Welcome to Antigravity</title>",
+    "to": "<title>欢迎使用 Antigravity</title>"
+   },
+   {
+    "from": ">Setting up…</div>",
+    "to": ">正在设置…</div>"
+   },
+   {
+    "from": "<h1>Welcome to the new Antigravity!</h1>",
+    "to": "<h1>欢迎使用全新的 Antigravity！</h1>"
+   },
+   {
+    "from": "<p>Antigravity has been redesigned to put agents first with new capabilities. If you'd still like a code editor, you can download it as a separate app named <b>Antigravity IDE</b>.</p>",
+    "to": "<p>Antigravity 经过重新设计，以智能体为核心，并加入了新功能。如果你仍需要代码编辑器，可以单独下载名为 <b>Antigravity IDE</b> 的应用。</p>"
+   },
+   {
+    "from": "<span>Download the Antigravity IDE</span>",
+    "to": "<span>下载 Antigravity IDE</span>"
+   },
+   {
+    "from": "id=\"btn-skip\">Explore the new Antigravity</button>",
+    "to": "id=\"btn-skip\">探索全新的 Antigravity</button>"
+   }
+  ]
+ }
+}
