@@ -1,20 +1,23 @@
-// Apply the Simplified Chinese layer to the installed Antigravity desktop app (Windows & macOS).
+// Apply the Simplified Chinese layer (UI + global Chinese rules plugin) to Antigravity (Windows & macOS).
 //   node scripts/apply.mjs              build from the original app.asar into resources/app,
-//                                       then rename app.asar -> app.asar.bak so resources/app loads
+//                                       install zh-cn-language plugin, then rename app.asar -> app.asar.bak
 //   node scripts/apply.mjs --check      only report versions / state
-//   node scripts/apply.mjs --dry-run    build into tmp/build/app, do not touch the install
+//   node scripts/apply.mjs --dry-run    build into tmp/build, do not touch the install or ~/.gemini
 //   node scripts/apply.mjs --no-rename  write resources/app but leave app.asar in place
+//   node scripts/apply.mjs --no-plugin  skip deploying the zh-cn-language global rules plugin
 //   --install <dir>                     Antigravity install dir (default: Windows %LOCALAPPDATA%\Programs\antigravity, macOS /Applications/Antigravity.app)
+//   --gemini-dir <dir>                  .gemini config root (default: ~/.gemini)
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import {
-  PROJECT_ROOT, MARKER, parseArgs, installPaths, extractAsar, readAsarFile, sha256File, readJson,
-  originalAsar, status, runningAppProcesses,
+  PROJECT_ROOT, MARKER, parseArgs, installPaths, pluginPaths, pluginStatus, installPlugin,
+  extractAsar, readAsarFile, sha256File, readJson, originalAsar, status, runningAppProcesses,
 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 const p = installPaths(args);
+const pp = pluginPaths(args);
 const log = (...a) => console.log(...a);
 const warn = (...a) => console.warn('警告：', ...a);
 const fail = (msg) => {
@@ -28,10 +31,12 @@ const fail = (msg) => {
 // the updated English version runs instead of stale translated code.
 function printStatus() {
   const s = status(p);
+  const ps = pluginStatus(pp);
   const v = (x) => (x ? `版本 ${x}` : '版本未知');
   log(`安装目录：${p.base}`);
   log(`app.asar：${s.asarExists ? v(s.asarVersion) : '不存在'}；app.asar.bak：${s.bakExists ? v(s.bakVersion) : '不存在'}`);
   log(`${p.resourcesAppLabel}：${s.app ? `${v(s.appVersion)}${s.marker ? `，汉化于 ${s.marker.appliedAt}` : '，不是本脚本生成的'}` : '不存在'}`);
+  log(`全局中文规则插件（${pp.name}）：${ps.installed ? `已安装${ps.version ? `（${v(ps.version)}）` : ''}${ps.managed ? '' : '（手动安装）'}，位于 ${ps.dir}` : `未安装（目标路径 ${ps.dir}）`}`);
   if (!s.asarExists && !s.bakExists) {
     warn('app.asar 和 app.asar.bak 都不存在，安装可能已损坏，请重新安装 Antigravity。');
     return 3;
@@ -171,6 +176,14 @@ if (fs.existsSync(target)) {
 fs.renameSync(staging, target);
 fs.rmSync(old, { recursive: true, force: true });
 log(`已写入 ${target}`);
+
+if (!args['no-plugin']) {
+  const pluginDest = buildRoot ? path.join(buildRoot, 'plugins', pp.name) : pp.dir;
+  const info = installPlugin(pp, pluginDest);
+  log(`全局中文规则插件（${pp.name}${buildRoot ? '，预演' : ''}）：已写入 ${info.dir}`);
+} else {
+  log('已按 --no-plugin 跳过全局中文规则插件部署。');
+}
 
 if (!buildRoot && !args['no-rename'] && fs.existsSync(p.asar)) {
   // Back up the original package in the project before touching it.

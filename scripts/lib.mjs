@@ -1,5 +1,6 @@
 // Shared helpers for apply/restore/status.
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -8,6 +9,8 @@ export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.
 export const MARKER = 'antigravity-zh.json';
 export const IS_MAC = process.platform === 'darwin';
 export const IS_WIN = process.platform === 'win32';
+export const PLUGIN_NAME = 'zh-cn-language';
+export const PLUGIN_MARKER = '.antigravity-zh-managed';
 
 export function parseArgs(argv) {
   const args = { _: [] };
@@ -70,6 +73,58 @@ export function installPaths(args = {}) {
     applyScript: 'apply.cmd',
     restoreScript: 'restore.cmd',
   };
+}
+
+export function pluginPaths(args = {}) {
+  const geminiDir = args['gemini-dir'] || process.env.GEMINI_DIR || path.join(os.homedir(), '.gemini');
+  const dir = path.join(geminiDir, 'config', 'plugins', PLUGIN_NAME);
+  return {
+    name: PLUGIN_NAME,
+    src: path.join(PROJECT_ROOT, 'plugins', PLUGIN_NAME),
+    geminiDir,
+    dir,
+    marker: path.join(dir, PLUGIN_MARKER),
+  };
+}
+
+export function pluginStatus(pp) {
+  const manifestPath = path.join(pp.dir, 'plugin.json');
+  const rulesPath = path.join(pp.dir, 'rules', 'AGENTS.md');
+  const installed = fs.existsSync(manifestPath) && fs.existsSync(rulesPath);
+  const managed = fs.existsSync(pp.marker);
+  let version = null;
+  if (installed) {
+    try {
+      version = readJson(manifestPath).version || null;
+    } catch {}
+  }
+  return { installed, managed, version, dir: pp.dir };
+}
+
+export function installPlugin(pp, targetDir = pp.dir) {
+  if (!fs.existsSync(pp.src)) {
+    throw new Error(`找不到内置插件目录：${pp.src}`);
+  }
+  fs.mkdirSync(path.dirname(targetDir), { recursive: true });
+  fs.cpSync(pp.src, targetDir, { recursive: true, force: true });
+  let version = null;
+  try {
+    version = readJson(path.join(pp.src, 'plugin.json')).version || null;
+  } catch {}
+  fs.writeFileSync(path.join(targetDir, PLUGIN_MARKER), JSON.stringify({
+    tool: 'antigravity-zh',
+    plugin: pp.name,
+    version,
+    installedAt: new Date().toISOString(),
+  }, null, 2) + '\n');
+  return { dir: targetDir, version };
+}
+
+export function removePlugin(pp, force = false) {
+  if (!fs.existsSync(pp.dir)) return { status: 'absent', dir: pp.dir };
+  if (!fs.existsSync(pp.marker) && !force) return { status: 'unmanaged', dir: pp.dir };
+  fs.rmSync(pp.dir, { recursive: true, force: true });
+  return { status: 'removed', dir: pp.dir };
 }
 
 // Minimal reader for Electron's asar format (same layout @electron/asar reads):

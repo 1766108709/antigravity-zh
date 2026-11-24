@@ -1,11 +1,12 @@
-// Remove the Chinese layer: delete resources\app and, in rename mode, rename app.asar.bak back.
-//   node scripts/restore.mjs [--install <dir>] [--force]
+// Remove the Chinese layer: delete resources\app, rename app.asar.bak back, and remove the managed plugin.
+//   node scripts/restore.mjs [--install <dir>] [--gemini-dir <dir>] [--keep-plugin] [--force]
 import fs from 'node:fs';
 import path from 'node:path';
-import { MARKER, parseArgs, installPaths, runningAppProcesses } from './lib.mjs';
+import { MARKER, parseArgs, installPaths, pluginPaths, removePlugin, runningAppProcesses } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 const p = installPaths(args);
+const pp = pluginPaths(args);
 
 const running = await runningAppProcesses(p.exe);
 if (running.length) {
@@ -36,4 +37,17 @@ if (!fs.existsSync(p.asar) && fs.existsSync(p.asarBak)) {
 } else if (fs.existsSync(p.asar) && fs.existsSync(p.asarBak)) {
   console.log('提示：app.asar 和 app.asar.bak 同时存在（多半是更新装了新的 app.asar），保留 app.asar，未动 app.asar.bak。');
 }
+
+if (!args['keep-plugin']) {
+  const res = removePlugin(pp, Boolean(args.force));
+  if (res.status === 'removed') {
+    console.log(`已移除全局中文规则插件：${res.dir}`);
+    changed = true;
+  } else if (res.status === 'unmanaged') {
+    console.log(`提示：${res.dir} 不是本脚本安装的，已保留（如需强制删除请加 --force）。`);
+  }
+} else {
+  console.log('已按 --keep-plugin 保留全局中文规则插件。');
+}
+
 console.log(changed ? '已还原为英文原版。' : '没有需要还原的内容，当前就是英文原版。');

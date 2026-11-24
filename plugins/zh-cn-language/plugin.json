@@ -1,0 +1,6 @@
+{
+  "name": "zh-cn-language",
+  "displayName": "简体中文全局规则",
+  "version": "1.0.0",
+  "description": "全局约束 Agent 使用简体中文进行日常回复、交互式提问（ask_question）、命令授权摘要（toolSummary）及文档工件（Artifacts）编写。"
+}
