@@ -71,6 +71,14 @@
   ],
   "dist/menu.js": [
    {
+    "from": "label: 'New Window',",
+    "to": "label: '新建窗口',"
+   },
+   {
+    "from": "label: 'Docs',",
+    "to": "label: '文档',"
+   },
+   {
     "from": "return { label: 'Connect to WSL', submenu };",
     "to": "return { label: '连接到 WSL', submenu };"
    },
@@ -130,6 +138,22 @@
    }
   ],
   "dist/updater.js": [
+   {
+    "from": "MenuUpdateStep[\"RestartToUpdate\"] = \"Restart to Update\";",
+    "to": "MenuUpdateStep[\"RestartToUpdate\"] = \"重启以更新\";"
+   },
+   {
+    "from": "MenuUpdateStep[\"DownloadingUpdate\"] = \"Downloading Update...\";",
+    "to": "MenuUpdateStep[\"DownloadingUpdate\"] = \"正在下载更新…\";"
+   },
+   {
+    "from": "MenuUpdateStep[\"CheckingForUpdates\"] = \"Checking for Updates...\";",
+    "to": "MenuUpdateStep[\"CheckingForUpdates\"] = \"正在检查更新…\";"
+   },
+   {
+    "from": "MenuUpdateStep[\"CheckForUpdates\"] = \"Check for Updates\";",
+    "to": "MenuUpdateStep[\"CheckForUpdates\"] = \"检查更新\";"
+   },
    {
     "from": "title: 'Check for Updates',",
     "to": "title: '检查更新',",

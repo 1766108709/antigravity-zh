@@ -1,30 +1,31 @@
 # Antigravity 简体中文汉化
 
-给 Windows 桌面端 **Antigravity**（默认安装路径 `%LOCALAPPDATA%\Programs\antigravity`，当前适配 **2.35.0**）添加一层**免重打包 `app.asar` 的简体中文汉化**。应用自动更新后重新运行一次脚本即可恢复中文。
+给 **Windows / macOS** 桌面端 **Antigravity**（Windows 默认路径 `%LOCALAPPDATA%\Programs\antigravity`，macOS 默认路径 `/Applications/Antigravity.app`，当前适配 **2.35.0**）添加一层**免重打包 `app.asar` 的简体中文汉化**。应用自动更新后重新运行一次脚本即可恢复中文。
 
 ## 适用环境
 
-- Windows 10 / 11
+- Windows 10 / 11 或 macOS（Apple Silicon / Intel）
 - [Node.js](https://nodejs.org/) 18 及以上版本
 
 ## 快速开始
 
 1. 克隆仓库或下载 ZIP 并解压到本地目录。
-2. 双击根目录下的 `apply.cmd`（或命令行运行 `node scripts\apply.mjs`）。
-   - 如果 Antigravity 正在运行并锁定了 `app.asar`，`apply.cmd` 会自动生成汉化目录并等待你关闭所有 Antigravity 窗口，关闭后会自动完成切换。
-3. 重新打开 Antigravity 即可看到简体中文界面。
+2. 运行一键脚本：
+   - **Windows**：双击根目录下的 `apply.cmd`（或运行 `node scripts\apply.mjs`）。若 Antigravity 正在运行并锁定了 `app.asar`，`apply.cmd` 会等待你关闭所有窗口后自动完成切换。
+   - **macOS**：双击根目录下的 `apply.command`（或在终端运行 `./apply.command` / `node scripts/apply.mjs`）。
+3. 重启 Antigravity 即可看到简体中文界面。
 
 ## 常用操作
 
-| 操作 | 双击脚本 | 命令行 | `npm` 脚本 |
+| 操作 | Windows | macOS | 命令行 / `npm` |
 | --- | --- | --- | --- |
-| 应用汉化 | `apply.cmd` | `node scripts\apply.mjs` | `npm run apply` |
-| 检查状态 | `check.cmd` | `node scripts\apply.mjs --check` | `npm run check` |
-| 还原英文原版 | `restore.cmd` | `node scripts\restore.mjs` | `npm run restore` |
-| 预演构建（不改安装目录） | — | `node scripts\apply.mjs --dry-run` | `npm run dry-run` |
-| 翻译引擎回归测试 | — | `node tools\test-hub-i18n.cjs` | `npm test` |
+| 应用汉化 | `apply.cmd` | `apply.command` | `npm run apply` |
+| 检查状态 | `check.cmd` | `check.command` | `npm run check` |
+| 还原英文原版 | `restore.cmd` | `restore.command` | `npm run restore` |
+| 预演构建（不改安装目录） | — | — | `npm run dry-run` |
+| 翻译引擎回归测试 | — | — | `npm test` |
 
-- 安装在其他路径时可加 `--install <安装目录>`（或设置环境变量 `ANTIGRAVITY_DIR`）。
+- 安装在其他路径时可加 `--install <安装目录>`（macOS 支持传 `.app` 路径，或设置环境变量 `ANTIGRAVITY_DIR`）。
 - 汉化与还原操作均可重复执行。
 
 ## 目录结构
@@ -75,13 +76,13 @@ Antigravity 自动更新会写回新的 `app.asar` 并覆盖加载优先级，�
 ## 覆盖范围
 
 - **主界面（`dict/hub.json`，3,452 条）**：侧栏与自定义侧边栏/筛选排序（含收件箱/已处理模式、运行中分组与移动对话）、首页、输入区、标题栏菜单、命令面板、对话内联权限与提问卡片、云端对话与智能体创建、远程项目克隆、设置各页（常规、应用、外观、快捷键、Orchestrator 设置与模型选择、通知、模型、内置浏览器与站点数据、账户、反馈）、自定义（插件市场、插件包、插件权限撤销与管理）、自动化及筛选校验、权限、语音听写语言、终端、审查与浏览器等文案。支持 `{0}` 动态占位模板及 `<0>` 内联子元素整句模板。
-- **主进程（`dict/main.json`，203 条）**：托盘菜单、退出确认、启动错误、文件选择框、检查更新、设备与通行密钥选择、SSH 远程连接流程、WSL 提示及欢迎向导。
+- **主进程（`dict/main.json`，209 条）**：应用菜单、托盘菜单、退出确认、启动错误、文件选择框、检查更新、设备与通行密钥选择、SSH 远程连接流程、WSL 提示及欢迎向导。
 
 ### 刻意保留英文的部分
 
-- 产品名、模型名、档位与专用模式/徽章（如 `Antigravity`、`Gemini`、`High`、`Orchestrator`、`New` 徽章）以及按键名（`Ctrl`、`Shift`、`Enter` 等）。
+- 产品名、模型名、档位与专用模式/徽章（如 `Antigravity`、`Gemini`、`High`、`Orchestrator`、`New` 徽章）以及按键名（`Ctrl`、`Cmd`、`Shift`、`Enter` 等）。
 - 用户自定名称（项目目录名、对话标题、自定义分组、定时任务、自定义智能体、插件与主机名等）、智能体回复、代码与终端输出。
-- 第三方插件目录动态数据与仅在 macOS 出现的菜单项。
+- 第三方插件目录动态数据与系统原生标准角色菜单（macOS 会随系统语言自动显示中文）。
 
 ## 维护：补充新版本词条
 

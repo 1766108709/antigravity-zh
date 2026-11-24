@@ -30,8 +30,8 @@ exports.redirectIfStale = function redirectIfStale() {
   const own = require('../package.json');
   const sizeChanged = typeof marker.asarSize === 'number' && marker.asarSize !== asarSize;
   if (asarPkg.version === own.version && !sizeChanged) return false;
-  console.warn(`[antigravity-zh] resources\\app is ${own.version} but app.asar is ${asarPkg.version}` +
-    (sizeChanged ? ' (app.asar changed)' : '') + '; loading app.asar. Re-run apply.cmd to translate the new version.');
+  console.warn(`[antigravity-zh] unpacked app is ${own.version} but app.asar is ${asarPkg.version}` +
+    (sizeChanged ? ' (app.asar changed)' : '') + '; loading app.asar. Re-run apply script to translate the new version.');
   const { app } = require('electron');
   if (typeof app.setVersion === 'function') app.setVersion(asarPkg.version);
   require(path.join(asarDir, asarPkg.main || 'dist/main.js'));

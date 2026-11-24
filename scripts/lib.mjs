@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const MARKER = 'antigravity-zh.json';
+export const IS_MAC = process.platform === 'darwin';
+export const IS_WIN = process.platform === 'win32';
 
 export function parseArgs(argv) {
   const args = { _: [] };
@@ -22,6 +24,34 @@ export function parseArgs(argv) {
 }
 
 export function installPaths(args = {}) {
+  if (IS_MAC) {
+    let base = args.install || process.env.ANTIGRAVITY_DIR || '/Applications/Antigravity.app';
+    base = path.resolve(base);
+    if (path.basename(base) === 'Contents' && path.dirname(base).endsWith('.app')) {
+      base = path.dirname(base);
+    }
+    const resources = base.endsWith('.app')
+      ? path.join(base, 'Contents', 'Resources')
+      : path.join(base, 'Resources');
+    return {
+      base,
+      exe: base.endsWith('.app')
+        ? path.join(base, 'Contents', 'MacOS', 'Antigravity')
+        : path.join(base, 'Antigravity'),
+      resources,
+      lsBinary: path.join(resources, 'bin', 'language_server'),
+      asar: path.join(resources, 'app.asar'),
+      asarBak: path.join(resources, 'app.asar.bak'),
+      unpacked: path.join(resources, 'app.asar.unpacked'),
+      app: path.join(resources, 'app'),
+      staging: path.join(resources, 'app.zh-staging'),
+      old: path.join(resources, 'app.zh-old'),
+      resourcesAppLabel: 'Contents/Resources/app',
+      applyScript: './apply.command',
+      restoreScript: './restore.command',
+    };
+  }
+
   const base = args.install || process.env.ANTIGRAVITY_DIR ||
     path.join(process.env.LOCALAPPDATA || path.join(process.env.USERPROFILE || '', 'AppData', 'Local'), 'Programs', 'antigravity');
   const resources = path.join(base, 'resources');
@@ -29,12 +59,16 @@ export function installPaths(args = {}) {
     base,
     exe: path.join(base, 'Antigravity.exe'),
     resources,
+    lsBinary: path.join(resources, 'bin', 'language_server.exe'),
     asar: path.join(resources, 'app.asar'),
     asarBak: path.join(resources, 'app.asar.bak'),
     unpacked: path.join(resources, 'app.asar.unpacked'),
     app: path.join(resources, 'app'),
     staging: path.join(resources, 'app.zh-staging'),
     old: path.join(resources, 'app.zh-old'),
+    resourcesAppLabel: 'resources\\app',
+    applyScript: 'apply.cmd',
+    restoreScript: 'restore.cmd',
   };
 }
 
@@ -97,6 +131,7 @@ export function extractAsar(file, dest, unpackedDir = file + '.unpacked') {
             const buf = Buffer.alloc(entry.size);
             if (entry.size > 0) fs.readSync(fd, buf, 0, entry.size, dataOffset + Number(entry.offset));
             fs.writeFileSync(out, buf);
+            if (!IS_WIN && entry.executable) fs.chmodSync(out, 0o755);
           }
           count++;
         }
@@ -156,10 +191,23 @@ export function status(p) {
   return res;
 }
 
-// Antigravity.exe processes that are the desktop app (not ELECTRON_RUN_AS_NODE helpers).
+// Antigravity processes that are the desktop app (not ELECTRON_RUN_AS_NODE helpers).
 export async function runningAppProcesses(exePath) {
   const { execFileSync } = await import('node:child_process');
   try {
+    if (IS_MAC) {
+      const out = execFileSync('ps', ['-axo', 'pid=,command='], { encoding: 'utf8' });
+      return out.split(/\r?\n/).filter(Boolean).map((line) => {
+        const m = line.trim().match(/^(\d+)\s+([\s\S]+)$/);
+        if (!m) return null;
+        return { pid: Number(m[1]), exe: exePath, cmd: m[2] };
+      }).filter((p) => {
+        if (!p) return false;
+        if (exePath && p.cmd !== exePath && !p.cmd.startsWith(exePath + ' ')) return false;
+        if (!exePath && !/\/Antigravity\.app\/Contents\/MacOS\/Antigravity(?:\s|$)/.test(p.cmd)) return false;
+        return !/--type=/.test(p.cmd) && !/\.(m?js|cjs)\b/i.test(p.cmd);
+      });
+    }
     const ps = "Get-CimInstance Win32_Process -Filter \"Name='Antigravity.exe'\" | ForEach-Object { '' + $_.ProcessId + \"`t\" + $_.ExecutablePath + \"`t\" + $_.CommandLine }";
     const out = execFileSync('powershell.exe', ['-NoProfile', '-Command', ps], { encoding: 'utf8', windowsHide: true });
     return out.split(/\r?\n/).filter(Boolean).map((l) => {

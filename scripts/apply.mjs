@@ -1,10 +1,10 @@
-// Apply the Simplified Chinese layer to the installed Antigravity desktop app.
-//   node scripts/apply.mjs              build from the original app.asar into resources\app,
-//                                       then rename app.asar -> app.asar.bak so resources\app loads
+// Apply the Simplified Chinese layer to the installed Antigravity desktop app (Windows & macOS).
+//   node scripts/apply.mjs              build from the original app.asar into resources/app,
+//                                       then rename app.asar -> app.asar.bak so resources/app loads
 //   node scripts/apply.mjs --check      only report versions / state
-//   node scripts/apply.mjs --dry-run    build into tmp\build\app, do not touch the install
-//   node scripts/apply.mjs --no-rename  write resources\app but leave app.asar in place
-//   --install <dir>                     Antigravity install dir (default %LOCALAPPDATA%\Programs\antigravity)
+//   node scripts/apply.mjs --dry-run    build into tmp/build/app, do not touch the install
+//   node scripts/apply.mjs --no-rename  write resources/app but leave app.asar in place
+//   --install <dir>                     Antigravity install dir (default: Windows %LOCALAPPDATA%\Programs\antigravity, macOS /Applications/Antigravity.app)
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -31,22 +31,22 @@ function printStatus() {
   const v = (x) => (x ? `版本 ${x}` : '版本未知');
   log(`安装目录：${p.base}`);
   log(`app.asar：${s.asarExists ? v(s.asarVersion) : '不存在'}；app.asar.bak：${s.bakExists ? v(s.bakVersion) : '不存在'}`);
-  log(`resources\\app：${s.app ? `${v(s.appVersion)}${s.marker ? `，汉化于 ${s.marker.appliedAt}` : '，不是本脚本生成的'}` : '不存在'}`);
+  log(`${p.resourcesAppLabel}：${s.app ? `${v(s.appVersion)}${s.marker ? `，汉化于 ${s.marker.appliedAt}` : '，不是本脚本生成的'}` : '不存在'}`);
   if (!s.asarExists && !s.bakExists) {
     warn('app.asar 和 app.asar.bak 都不存在，安装可能已损坏，请重新安装 Antigravity。');
     return 3;
   }
   if (!s.asarExists && !s.app) {
-    warn('app.asar 已改名但 resources\\app 不存在，Antigravity 会打不开。请运行 restore.cmd 还原。');
+    warn(`app.asar 已改名但 ${p.resourcesAppLabel} 不存在，Antigravity 会打不开。请运行 ${p.restoreScript} 还原。`);
     return 3;
   }
   if (s.asarExists && s.app) {
-    warn(`app.asar 又出现了（${v(s.asarVersion)}），它会优先于 resources\\app（${v(s.appVersion)}）加载，` +
-      '所以现在运行的是英文版。多半是应用自动更新过，请重新运行 apply.cmd。');
+    warn(`app.asar 又出现了（${v(s.asarVersion)}），它会优先于 ${p.resourcesAppLabel}（${v(s.appVersion)}）加载，` +
+      `所以现在运行的是英文版。多半是应用自动更新过，请重新运行 ${p.applyScript}。`);
     return 2;
   }
   if (s.app && s.bakVersion && s.appVersion !== s.bakVersion) {
-    warn(`resources\\app 的版本（${s.appVersion}）和 app.asar.bak 的版本（${s.bakVersion}）不一致，请重新运行 apply.cmd。`);
+    warn(`${p.resourcesAppLabel} 的版本（${s.appVersion}）和 app.asar.bak 的版本（${s.bakVersion}）不一致，请重新运行 ${p.applyScript}。`);
     return 2;
   }
   log(s.app ? '状态：汉化已生效。' : '状态：英文原版。');
@@ -202,8 +202,8 @@ if (!buildRoot && !args['no-rename'] && fs.existsSync(p.asar)) {
         if (tryRenameAsar()) break;
       }
     } else {
-      warn('resources\\app 汉化文件已生成完毕（原文件已备份在 ' + backup + '），但当前 Antigravity 正从更新后的 app.asar 运行并锁定了该文件，无法在运行中直接将 app.asar 改名为 app.asar.bak。');
-      warn('请先关闭 Antigravity，再运行一次 apply.cmd 完成最后一步切换。');
+      warn(`${p.resourcesAppLabel} 汉化文件已生成完毕（原文件已备份在 ${backup}），但当前 Antigravity 正从更新后的 app.asar 运行并锁定了该文件，无法在运行中直接将 app.asar 改名为 app.asar.bak。`);
+      warn(`请先关闭 Antigravity，再运行一次 ${p.applyScript} 完成最后一步切换。`);
       process.exit(2);
     }
   }

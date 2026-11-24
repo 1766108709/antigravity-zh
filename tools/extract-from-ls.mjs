@@ -1,4 +1,4 @@
-// Extract the Hub main.js bundle directly from resources/bin/language_server.exe.
+// Extract the Hub main.js bundle directly from resources/bin/language_server(.exe).
 // Usage: node tools/extract-from-ls.mjs [outFile] [--install <dir>]
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,7 +7,7 @@ import { PROJECT_ROOT, parseArgs, installPaths } from '../scripts/lib.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 const paths = installPaths(args);
-const binPath = path.join(paths.resources, 'bin', 'language_server.exe');
+const binPath = paths.lsBinary;
 const outPath = args._[0] ? path.resolve(args._[0]) : path.join(PROJECT_ROOT, 'tmp', 'main-latest.js');
 
 if (!fs.existsSync(binPath)) {
@@ -53,7 +53,7 @@ while (searchFrom < buf.length) {
 }
 
 if (!extracted) {
-  console.error('未能从 language_server.exe 中提取 main.js（资源格式可能已变化）。');
+  console.error(`未能从 ${path.basename(binPath)} 中提取 main.js（资源格式可能已变化）。`);
   process.exit(1);
 }
 
