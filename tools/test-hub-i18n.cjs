@@ -64,11 +64,23 @@ class MockElement {
       if (base && !this._matchAtom(base)) return false;
       return this._findDescendant((el) => el._matchAtom(inner));
     }
+    if (s.includes(':not(')) {
+      const idx = s.indexOf(':not(');
+      const base = s.slice(0, idx);
+      const inner = s.slice(idx + 5, -1);
+      if (base && !this._matchAtom(base)) return false;
+      return !this._matchAtom(inner);
+    }
     let rest = s;
     const tagMatch = /^[a-zA-Z0-9]+/.exec(rest);
     if (tagMatch) {
       if (this.tagName !== tagMatch[0].toUpperCase()) return false;
       rest = rest.slice(tagMatch[0].length);
+    }
+    const idMatch = /#([a-zA-Z0-9_-]+)/.exec(rest);
+    if (idMatch) {
+      if (this.getAttribute('id') !== idMatch[1]) return false;
+      rest = rest.replace(/#[a-zA-Z0-9_-]+/, '');
     }
     const classMatches = [...rest.matchAll(/\.([a-zA-Z0-9_-]+)/g)];
     for (const m of classMatches) {
@@ -296,6 +308,81 @@ check('DOM 2.33.0 generic coordinator worker "Subagent" translated', genericWork
 check('DOM model-selector Orchestrator & New badge preserved', orchestratorModelRow.textContent(), 'OrchestratorNew');
 check('DOM customization New badge preserved', customNewBadge.textContent(), 'New');
 check('DOM sidecar-new-button "New" translated to "新建"', sidecarNewBtn.textContent(), '新建');
+
+// Swarm Board iframe translation layer regression tests
+const swarmEntries = JSON.parse(fs.readFileSync(path.join(root, 'dict', 'swarm.json'), 'utf8')).entries;
+const swarmSrc = fs.readFileSync(path.join(root, 'src', 'swarm-i18n.js'), 'utf8')
+  .replace('/*@AGY_ZH_SWARM_DICT@*/ { entries: {} }', () => JSON.stringify({ entries: swarmEntries }));
+
+const swarmBoardEl = new MockElement('div', { id: 'board', 'data-testid': 'swarm-board' }, [
+  new MockElement('h1', { id: 'swarm-title' }, [new MockText('Overview')]), // user/swarm title MUST stay untouched
+  new MockElement('span', { id: 'live-label' }, [new MockText('Live')]),
+  new MockElement('button', { 'data-tab': 'overview' }, [new MockText('Overview')]),
+  new MockElement('button', { 'data-tab': 'feed' }, [new MockText('Board'), new MockElement('span', { class: 'tab-count' }, [new MockText('1')])]),
+  new MockElement('button', { 'data-tab': 'members' }, [new MockText('Members'), new MockElement('span', { class: 'tab-count' }, [new MockText('2')])]),
+  new MockElement('button', { 'data-tab': 'graph' }, [new MockText('Graph')]),
+  new MockElement('h2', { class: 'o2-onb-h' }, [new MockText('Your swarm is starting')]),
+  new MockElement('b', {}, [new MockText('One goal')]),
+  new MockElement('span', {}, [new MockText('The coordinator splits it into tasks.')]),
+  new MockElement('b', {}, [new MockText('Many workers')]),
+  new MockElement('span', {}, [new MockText('Each takes a task, and they run in parallel.')]),
+  new MockElement('b', {}, [new MockText('One board')]),
+  new MockElement('span', {}, [new MockText('Updates land here. You step in only when asked.')]),
+  new MockElement('span', {}, [new MockText('Waiting for the first update')]),
+  new MockElement('h3', { class: 'o2-h' }, [new MockText('The team')]),
+  new MockElement('div', { class: 'o2-lb' }, [
+    new MockElement('b', {}, [new MockText('Coordinator')]),
+    new MockElement('p', {}, [new MockText('Active')]), // coordinator brief MUST stay untouched
+  ]),
+  new MockElement('button', { class: 'o2-m', 'data-o2who': '' }, [new MockElement('span', {}, [new MockText('All')])]),
+  new MockElement('button', { class: 'o2-m', 'data-o2who': 'mesh-advisor' }, [new MockElement('span', {}, [new MockText('Waiting')])]), // worker name MUST stay untouched
+  new MockElement('div', { class: 'msg-body' }, [new MockText('One goal')]), // board message body MUST stay untouched
+  new MockElement('input', { id: 'f-search', placeholder: 'Search' }, []),
+]);
+const swarmDoc = {
+  documentElement: swarmBoardEl,
+  querySelector(sel) { return sel === '[data-testid="swarm-board"]' ? swarmBoardEl : null; },
+  createTreeWalker: mockDocument.createTreeWalker,
+};
+let swarmObsCb = null;
+const swarmCtx = {
+  console: { warn: console.warn, log: console.log },
+  document: swarmDoc,
+  NodeFilter: { SHOW_TEXT: 4 },
+  MutationObserver: class { constructor(cb) { swarmObsCb = cb; } observe() {} },
+};
+swarmCtx.globalThis = swarmCtx;
+vm.runInNewContext(swarmSrc, swarmCtx);
+
+check('Swarm title preserved', swarmBoardEl.childNodes[0].textContent(), 'Overview');
+check('Swarm Live badge translated', swarmBoardEl.childNodes[1].textContent(), '实时');
+check('Swarm Overview tab translated', swarmBoardEl.childNodes[2].textContent(), '概览');
+check('Swarm Board tab translated keeping count', swarmBoardEl.childNodes[3].textContent(), '看板1');
+check('Swarm Members tab translated keeping count', swarmBoardEl.childNodes[4].textContent(), '成员2');
+check('Swarm Graph tab translated', swarmBoardEl.childNodes[5].textContent(), '关系图');
+check('Swarm onboarding heading translated', swarmBoardEl.childNodes[6].textContent(), '集群正在启动');
+check('Swarm One goal translated', swarmBoardEl.childNodes[7].textContent(), '一个目标');
+check('Swarm coordinator splits translated', swarmBoardEl.childNodes[8].textContent(), '协调者将其拆分为各项任务。');
+check('Swarm Many workers translated', swarmBoardEl.childNodes[9].textContent(), '多名协作成员');
+check('Swarm One board translated', swarmBoardEl.childNodes[11].textContent(), '同一块看板');
+check('Swarm Waiting for first update translated', swarmBoardEl.childNodes[13].textContent(), '正在等待首条进展更新');
+check('Swarm The team translated', swarmBoardEl.childNodes[14].textContent(), '团队成员');
+check('Swarm Coordinator label translated & brief preserved', swarmBoardEl.childNodes[15].textContent(), '协调者Active');
+check('Swarm All button translated', swarmBoardEl.childNodes[16].textContent(), '全部');
+check('Swarm worker chip preserved', swarmBoardEl.childNodes[17].textContent(), 'Waiting');
+check('Swarm msg-body preserved', swarmBoardEl.childNodes[18].textContent(), 'One goal');
+check('Swarm search placeholder translated', swarmBoardEl.childNodes[19].getAttribute('placeholder'), '搜索');
+
+// Non-swarm iframe must NOT activate swarm-i18n
+const otherDoc = {
+  documentElement: new MockElement('div', {}, [new MockText('Overview')]),
+  querySelector() { return null; },
+  createTreeWalker: mockDocument.createTreeWalker,
+};
+const otherCtx = { console, document: otherDoc, NodeFilter: { SHOW_TEXT: 4 }, MutationObserver: class { observe() {} } };
+otherCtx.globalThis = otherCtx;
+vm.runInNewContext(swarmSrc, otherCtx);
+check('Non-swarm iframe untouched by swarm-i18n', otherDoc.documentElement.textContent(), 'Overview');
 
 console.log(`${bad === 0 ? 'ALL PASSED' : bad + ' FAILED'}`);
 process.exitCode = bad ? 1 : 0;

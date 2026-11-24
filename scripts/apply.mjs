@@ -120,7 +120,23 @@ function patchOnce(file, from, to, what) {
 const mainJs = path.join(staging, ...asarPkg.main.split('/'));
 fs.copyFileSync(path.join(PROJECT_ROOT, 'src', 'zh-guard.js'), path.join(path.dirname(mainJs), 'zh-guard.js'));
 touched.add(path.join(path.dirname(mainJs), 'zh-guard.js'));
-patchOnce(mainJs, '"use strict";\n', '"use strict";\nif (require("./zh-guard").redirectIfStale()) return; // antigravity-zh\n', '版本保护');
+
+const swarmDict = readJson(path.join(PROJECT_ROOT, 'dict', 'swarm.json'));
+const swarmEntries = {};
+for (const [k, v] of Object.entries(swarmDict.entries || {})) if (typeof v === 'string' && v) swarmEntries[k] = v;
+const swarmRuntimeSrc = fs.readFileSync(path.join(PROJECT_ROOT, 'src', 'swarm-i18n.js'), 'utf8');
+const SWARM_DICT_PH = '/*@AGY_ZH_SWARM_DICT@*/ { entries: {} }';
+if (swarmRuntimeSrc.split(SWARM_DICT_PH).length !== 2) fail('src/swarm-i18n.js 里的词典占位符不是恰好一处。');
+const swarmRuntime = swarmRuntimeSrc.replace(SWARM_DICT_PH, () => JSON.stringify({ entries: swarmEntries }));
+const swarmHostSrc = fs.readFileSync(path.join(PROJECT_ROOT, 'src', 'zh-swarm.js'), 'utf8');
+const SWARM_SCRIPT_PH = "/*@AGY_ZH_SWARM_SCRIPT@*/ ''";
+if (swarmHostSrc.split(SWARM_SCRIPT_PH).length !== 2) fail('src/zh-swarm.js 里的脚本占位符不是恰好一处。');
+const swarmHostFile = path.join(path.dirname(mainJs), 'zh-swarm.js');
+fs.writeFileSync(swarmHostFile, swarmHostSrc.replace(SWARM_SCRIPT_PH, () => JSON.stringify(swarmRuntime)));
+touched.add(swarmHostFile);
+log(`Swarm 面板词典：${Object.keys(swarmEntries).length} 条`);
+
+patchOnce(mainJs, '"use strict";\n', '"use strict";\nif (require("./zh-guard").redirectIfStale()) return;\nrequire("./zh-swarm").install(); // antigravity-zh\n', '版本保护与 Swarm 面板翻译');
 
 const preload = path.join(staging, 'dist', 'preload.js');
 patchOnce(preload,
@@ -163,6 +179,7 @@ fs.writeFileSync(path.join(staging, MARKER), JSON.stringify({
   mainRules: applied,
   mainRulesMissing: missing.length,
   hubEntries: Object.keys(entries).length,
+  swarmEntries: Object.keys(swarmEntries).length,
 }, null, 2));
 
 const old = buildRoot ? path.join(buildRoot, 'app.zh-old') : p.old;

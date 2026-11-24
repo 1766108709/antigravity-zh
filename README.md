@@ -48,6 +48,8 @@ antigravity-zh/
 │   └── lib.mjs                                      # 跨平台路径解析、asar 解包、插件管理与状态检测
 ├── src/
 │   ├── hub-i18n.js                                  # 注入 preload.js 的主界面 DOM/菜单/通知翻译层
+│   ├── swarm-i18n.js                                # Swarm 侧边协作面板 iframe 翻译层
+│   ├── zh-swarm.js                                  # 主进程钩子：仅向 Swarm 面板 iframe 注入翻译层
 │   └── zh-guard.js                                  # 版本保护：防止新版更新后误加载旧版解压目录
 ├── plugins/
 │   └── zh-cn-language/                              # 全局简体中文交互规则插件（一键部署到 ~/.gemini/config/plugins/）
@@ -57,6 +59,7 @@ antigravity-zh/
 ├── dict/
 │   ├── hub.json                                     # 主界面词典（3,452 条）
 │   ├── main.json                                    # 主进程替换规则（209 条）
+│   ├── swarm.json                                   # Swarm 协作面板词典（225 条）
 │   └── glossary.md                                  # 术语统一约定
 ├── tools/
 │   ├── extract-from-ls.mjs                          # 从 language_server 提取最新前端 main.js
@@ -92,6 +95,7 @@ Antigravity 自动更新会写回新的 `app.asar` 并覆盖加载优先级，�
 
 - **主界面（`dict/hub.json`，3,452 条）**：侧栏与自定义侧边栏/筛选排序（含收件箱/已处理模式、运行中分组与移动对话）、首页、输入区、标题栏菜单、命令面板、对话内联权限与提问卡片、云端对话与智能体创建、远程项目克隆、设置各页（常规、应用、外观、快捷键、Orchestrator 设置与模型选择、通知、模型、内置浏览器与站点数据、账户、反馈）、自定义（插件市场、插件包、插件权限撤销与管理）、自动化及筛选校验、权限、语音听写语言、终端、审查与浏览器等文案。支持 `{0}` 动态占位模板及 `<0>` 内联子元素整句模板。
 - **主进程（`dict/main.json`，209 条）**：应用菜单、托盘菜单、退出确认、启动错误、文件选择框、检查更新、设备与通行密钥选择、SSH 远程连接流程、WSL 提示及欢迎向导。
+- **Swarm 协作面板（`dict/swarm.json`，225 条）**：概览启动引导、看板筛选与消息操作、成员与工作线状态、关系图/蜂巢视图回放、GIF 导出与原始数据工具栏（通过主进程 `did-frame-finish-load` 仅注入 Swarm iframe，不改动 `builtin/` 文件与校验和）。
 - **Agent 对话与卡片（`plugins/zh-cn-language`）**：日常回复、`ask_question` 提问卡片、`run_command` 授权摘要（`toolSummary`）、Artifacts 工件及子代理角色名统一使用简体中文，同时保留代码标识符、路径、命令与通用英文专有名词。
 
 ### 刻意保留英文的部分
