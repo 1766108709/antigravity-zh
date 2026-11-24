@@ -16,19 +16,19 @@
    },
    {
     "from": "message: `The WSL distro \"${WSL_DISTRO}\" is no longer installed.`,",
-    "to": "message: `WSL 发行版“${WSL_DISTRO}”已不存在。`,"
+    "to": "message: `WSL 发行版“${WSL_DISTRO}”已未安装。`,"
    },
    {
     "from": "detail: 'Antigravity opened on Windows instead.',",
-    "to": "detail: 'Antigravity 已改为在 Windows 上打开。',"
+    "to": "detail: '已改为在 Windows 上打开 Antigravity。',"
    },
    {
     "from": "`Failed to install the server into WSL distro \"${WSL_DISTRO}\":\\n${err.message}`",
-    "to": "`无法把服务端安装到 WSL 发行版“${WSL_DISTRO}”：\\n${err.message}`"
+    "to": "`无法将服务端安装到 WSL 发行版“${WSL_DISTRO}”：\\n${err.message}`"
    },
    {
     "from": "showErrorBox('WSL setup failed', msg)",
-    "to": "showErrorBox('WSL 设置失败', msg)"
+    "to": "showErrorBox('WSL 初始化失败', msg)"
    },
    {
     "from": "showErrorBox('Startup failed', msg)",
@@ -60,7 +60,7 @@
    },
    {
     "from": "detail: 'There may be agents or background tasks running.',",
-    "to": "detail: '可能还有智能体或后台任务在运行。',"
+    "to": "detail: '可能仍有智能体或后台任务正在运行。',"
    }
   ],
   "dist/tray.js": [
@@ -108,7 +108,7 @@
    },
    {
     "from": "warning: 'This folder is on the Windows filesystem. Accessing it from WSL (via /mnt) can be slow — for best performance keep projects inside the WSL filesystem.',",
-    "to": "warning: '此文件夹位于 Windows 文件系统中。从 WSL（通过 /mnt）访问可能较慢，想要最佳性能，请把项目放在 WSL 文件系统内。',"
+    "to": "warning: '此文件夹位于 Windows 文件系统中，从 WSL（通过 /mnt）访问可能较慢。为获得最佳性能，建议将项目存放在 WSL 文件系统内。',"
    },
    {
     "from": "return { error: `This location cannot be opened in WSL: ${winPath}` };",
@@ -126,7 +126,7 @@
   "dist/provisionSplash.js": [
    {
     "from": "<div>Setting up WSL: ${escapeHtml(distro)}</div>",
-    "to": "<div>正在设置 WSL：${escapeHtml(distro)}</div>"
+    "to": "<div>正在初始化 WSL：${escapeHtml(distro)}</div>"
    }
   ],
   "dist/updater.js": [
@@ -137,7 +137,7 @@
    },
    {
     "from": "message: 'No updates available',",
-    "to": "message: '没有可用的更新',"
+    "to": "message: '当前已是最新版本',"
    },
    {
     "from": "buttons: ['OK'],",
@@ -168,15 +168,15 @@
    },
    {
     "from": "message: `${origin} wants to connect to a ${KIND_NOUNS[kind]}`,",
-    "to": "message: `${origin} 想要连接${KIND_NOUNS[kind]}`,"
+    "to": "message: `${origin} 请求连接${KIND_NOUNS[kind]}`,"
    },
    {
     "from": "? 'Select a device:'",
-    "to": "? '选择设备：'"
+    "to": "? '请选择设备：'"
    },
    {
     "from": ": 'No compatible devices found.',",
-    "to": ": '没有找到兼容的设备。',"
+    "to": ": '未找到兼容的设备。',"
    },
    {
     "from": "buttons: [...snapshot.map(({ label }) => label), 'Cancel'],",
@@ -198,7 +198,7 @@
    },
    {
     "from": "detail: 'Select a passkey account to continue:',",
-    "to": "detail: '选择一个通行密钥账户以继续：',"
+    "to": "detail: '请选择用于继续登录的通行密钥账户：',"
    },
    {
     "from": "buttons: [...accountLabels, 'Cancel'],",
@@ -216,23 +216,23 @@
    },
    {
     "from": "'Your connection to this site is not secure',",
-    "to": "'你与此网站之间的连接不安全',"
+    "to": "'与此网站的连接不安全',"
    },
    {
     "from": "'You should not enter any sensitive information on this site (for ' +\n        'example, passwords or credit cards), because it could be stolen by ' +\n        'attackers.',",
-    "to": "'请勿在此网站上输入任何敏感信息（例如密码或信用卡信息），因为攻击者可能会盗取这些信息。',"
+    "to": "'请勿在此网站输入密码或银行卡号等敏感信息，否则可能会被攻击者窃取。',"
    },
    {
     "from": "'Connection is secure',",
-    "to": "'连接是安全的',"
+    "to": "'连接安全',"
    },
    {
     "from": "'Your information (for example, passwords or credit card numbers) is ' +\n            'private when it is sent to this site.',",
-    "to": "'你的信息（例如密码或信用卡号）在发送到此网站时是私密的。',"
+    "to": "'你向此网站发送的信息（如密码或信用卡号）已受加密保护。',"
    },
    {
     "from": "neutral: ['Connection security information is not available for this page'],",
-    "to": "neutral: ['此网页无法提供连接安全信息'],"
+    "to": "neutral: ['此页面暂无连接安全信息'],"
    },
    {
     "from": "return ms > 0 ? new Date(ms).toLocaleString() : 'unknown';",
@@ -248,7 +248,7 @@
    },
    {
     "from": "lines.push(`Issued to: ${certificate.subjectName}`, `Issued by: ${certificate.issuer}`, `Valid from: ${formatDate(certificate.validFromMs)}`, `Valid until: ${formatDate(certificate.validToMs)}`);",
-    "to": "lines.push(`颁发给：${certificate.subjectName}`, `颁发者：${certificate.issuer}`, `有效期从：${formatDate(certificate.validFromMs)}`, `有效期至：${formatDate(certificate.validToMs)}`);"
+    "to": "lines.push(`颁发给：${certificate.subjectName}`, `颁发者：${certificate.issuer}`, `生效时间：${formatDate(certificate.validFromMs)}`, `到期时间：${formatDate(certificate.validToMs)}`);"
    },
    {
     "from": "lines.push(`Protocol: ${certificate.protocol}`);",
@@ -289,12 +289,44 @@
   ],
   "dist/remote/remoteManager.js": [
    {
+    "from": "`${entry.label} didn't answer after this computer woke up.`",
+    "to": "`本机唤醒后，${entry.label} 未响应。`"
+   },
+   {
     "from": "title: 'Choose an SSH config file',",
     "to": "title: '选择 SSH 配置文件',"
    },
    {
+    "from": "detail: `${problem.why[0].toUpperCase()}${problem.why.slice(1)}. ${problem.fix}`,",
+    "to": "detail: `${problem.why}。${problem.fix}`,"
+   },
+   {
+    "from": "message: `${name} can't be the SSH config file`,",
+    "to": "message: `${name} 不能用作 SSH 配置文件`,"
+   },
+   {
+    "from": "title: 'Choose another SSH config file',",
+    "to": "title: '选择其他 SSH 配置文件',"
+   },
+   {
+    "from": "buttons: ['Choose Another File…', 'Cancel'],",
+    "to": "buttons: ['选择其他文件…', '取消'],"
+   },
+   {
     "from": "title: 'SSH connection failed',",
     "to": "title: 'SSH 连接失败',"
+   },
+   {
+    "from": "this.reportError(err, entry.label, 'Sign-in failed', win);",
+    "to": "this.reportError(err, entry.label, '登录失败', win);"
+   },
+   {
+    "from": "title: 'Could not restart the SSH server',",
+    "to": "title: '无法重启 SSH 服务器',"
+   },
+   {
+    "from": "message: `${entry.label} still runs Antigravity server ${running}.`,",
+    "to": "message: `${entry.label} 仍在运行 Antigravity 服务器 ${running}。`,"
    },
    {
     "from": "buttons: ['Stop Server', 'Cancel'],",
@@ -310,16 +342,36 @@
     "to": "message: `要停止 ${entry.label} 上的 Antigravity 服务器吗？`,"
    },
    {
-    "from": "detail: 'Agents running on this host will stop and its window will close. ' +\n                    'The server starts again the next time you connect.',",
-    "to": "detail: '此主机上运行的智能体会停止，它的窗口也会关闭。下次连接时服务器会重新启动。',"
+    "from": "detail: 'Agents running on this host will stop and its window will close. ' +\n                        'The server starts again the next time you connect.',",
+    "to": "detail: '此主机上运行的智能体将停止，其窗口也将关闭。下次连接时服务器会自动重新启动。',"
+   },
+   {
+    "from": "this.reportError(err, entry.label, 'Could not stop the SSH server', win);",
+    "to": "this.reportError(err, entry.label, '无法停止 SSH 服务器', win);"
    },
    {
     "from": "message: `Not connected to ${label}`,",
-    "to": "message: `未连接到 ${label}`,"
+    "to": "message: `尚未连接到 ${label}`,"
    },
    {
     "from": "detail: 'Reconnect first, then stop its server.',",
-    "to": "detail: '请先重新连接，再停止它的服务器。',"
+    "to": "detail: '请先重新连接，然后再停止该主机上的服务器。',"
+   },
+   {
+    "from": "buttons: ['Allow', \"Don't Allow\"],",
+    "to": "buttons: ['允许', '不允许'],"
+   },
+   {
+    "from": "title: 'Microphone access',",
+    "to": "title: '麦克风访问权限',"
+   },
+   {
+    "from": "message: `Allow ${label} to use your microphone?`,",
+    "to": "message: `允许 ${label} 使用你的麦克风吗？`,"
+   },
+   {
+    "from": "detail: `The page in this window comes from ${label}. If you allow it, that ` +\n                \"host can use this computer's microphone for voice whenever one of \" +\n                'its windows is open. Antigravity asks again after you quit it.',",
+    "to": "detail: `此窗口中的页面来自 ${label}。允许后，只要该主机的任一窗口处于打开状态，该主机即可使用本机麦克风进行语音输入。退出 Antigravity 后下次将重新询问。`,"
    },
    {
     "from": "buttons: ['Sign In', 'Cancel'],",
@@ -327,7 +379,8 @@
    },
    {
     "from": "title: 'Sign in',",
-    "to": "title: '登录',"
+    "to": "title: '登录',",
+    "count": 2
    },
    {
     "from": "message: `Sign in to your organization for ${entry.label}?`,",
@@ -335,7 +388,7 @@
    },
    {
     "from": "detail: 'Continue only if you just chose to sign in with your organization ' +\n                `in this window. ${entry.label} will get access to your ` +\n                \"organization's Google Cloud account.\\n\" +",
-    "to": "detail: `只有在你刚刚于此窗口中选择用组织账户登录时才继续。${entry.label} 将获得你所在组织的 Google Cloud 账户的访问权限。\\n` +"
+    "to": "detail: `仅当你刚刚在此窗口中选择了使用组织账户登录时才请继续。继续后，${entry.label} 将获得你所在组织 Google Cloud 账户的访问权限。\\n` +"
    },
    {
     "from": "? `Workforce pool: ${names[1]}  Provider: ${names[2]}`",
@@ -344,24 +397,376 @@
    {
     "from": ": `Identity provider: ${provider}`",
     "to": ": `身份提供方：${provider}`"
+   },
+   {
+    "from": "buttons: ['Continue', 'Cancel'],",
+    "to": "buttons: ['继续', '取消'],"
+   },
+   {
+    "from": "message: `Finish this sign-in on ${entry.label}?`,",
+    "to": "message: `要在 ${entry.label} 上完成此次登录吗？`,"
+   },
+   {
+    "from": "detail: `Continue only if you just chose to sign in from the ${entry.label} ` +\n                'window. Your browser opens the sign-in page; once you sign in, ' +\n                `${entry.label} gets access to that account.\\n` +\n                `Sign-in page: ${(0, types_1.sanitizeRemoteText)(new URL(origin).host, 200)}`,",
+    "to": "detail: `仅当你刚刚在 ${entry.label} 窗口中选择了登录时才请继续。浏览器将打开登录页面；完成登录后，${entry.label} 将获得该账户的访问权限。\\n登录页面：${(0, types_1.sanitizeRemoteText)(new URL(origin).host, 200)}`,"
+   },
+   {
+    "from": "buttons: ['Take Over', 'Cancel'],",
+    "to": "buttons: ['接管', '取消'],"
+   },
+   {
+    "from": "title: 'Shared home directory',",
+    "to": "title: '共享主目录',"
+   },
+   {
+    "from": "? `This window's Antigravity server runs on ${host}, another machine that shares your home directory.`",
+    "to": "? `此窗口的 Antigravity 服务器正在另一台共享你主目录的机器 ${host} 上运行。`"
+   },
+   {
+    "from": "? `Your Antigravity server runs on ${host}, another machine that shares your home directory.`",
+    "to": "? `你的 Antigravity 服务器正在另一台共享你主目录的机器 ${host} 上运行。`"
+   },
+   {
+    "from": ": `${host}, another machine that shares your home directory, started your Antigravity server.`,",
+    "to": ": `另一台共享你主目录的机器 ${host} 启动了你的 Antigravity 服务器。`,"
+   },
+   {
+    "from": "? `${label} reached ${here} this time. Cancel and reconnect to try again for ${host}, or take over to stop the server on ${host}, and its agents, and run it on ${here} instead.`",
+    "to": "? `${label} 本次连接到了 ${here}。你可以取消并重新连接以重试连往 ${host}，或选择“接管”以停止 ${host} 上的服务器及其智能体，改为在 ${here} 上运行。`"
+   },
+   {
+    "from": "? `${label} reached ${here}. Take over to stop the server on ${host}, and its agents, and run it on ${here} instead. To keep it running, connect to ${host}.`",
+    "to": "? `${label} 连接到了 ${here}。选择“接管”将停止 ${host} 上的服务器及其智能体，改为在 ${here} 上运行；若要保持原服务器继续运行，请连接到 ${host}。`"
+   },
+   {
+    "from": ": `${label} reached ${here}. Take over only if that server no longer runs, for example if ${host} was shut down or replaced: if it still runs, both servers would write the same files. To check, connect to ${host}.`,",
+    "to": ": `${label} 连接到了 ${here}。仅在确认原服务器已不再运行（例如 ${host} 已关机或被替换）时才选择“接管”——若原服务器仍在运行，两个服务器会同时写入相同文件。如需确认，请先连接到 ${host}。`,"
+   },
+   {
+    "from": "const what = terminals === 0 ? 'agent or task' : 'agent, task or terminal';",
+    "to": "const what = terminals === 0 ? '智能体或任务' : '智能体、任务或终端';"
+   },
+   {
+    "from": "buttons: ['Restart', 'Later'],",
+    "to": "buttons: ['重启', '稍后'],"
+   },
+   {
+    "from": "title: 'Restart SSH server',",
+    "to": "title: '重启 SSH 服务器',"
+   },
+   {
+    "from": "message: `${label} is running server ${running}; this app is ${expected}. Restart the server now?`,",
+    "to": "message: `${label} 当前运行的服务端版本为 ${running}，而本应用版本为 ${expected}。要立即重启服务器吗？`,"
+   },
+   {
+    "from": "detail: `Any ${what} still running on it stops. The server starts again with this app's version.`,",
+    "to": "detail: `正在其上运行的任何${what}都将停止，随后服务器将以当前应用的版本重新启动。`,"
+   }
+  ],
+  "dist/remote/sshConfigHosts.js": [
+   {
+    "from": "const NOT_CONFIG = \"isn't an SSH config file\";",
+    "to": "const NOT_CONFIG = '不是有效的 SSH 配置文件';"
+   },
+   {
+    "from": "const CHOOSE_CONFIG = 'Choose a file of ssh settings, such as ~/.ssh/config.';",
+    "to": "const CHOOSE_CONFIG = '请选择包含 SSH 配置的文件（例如 ~/.ssh/config）。';"
+   },
+   {
+    "from": "const UNREADABLE = \"is saved in a way ssh can't read\";",
+    "to": "const UNREADABLE = '的保存格式无法被 ssh 读取';"
+   },
+   {
+    "from": "const SAVE_AS_UTF8 = 'Save it as UTF-8 without a byte-order mark.';",
+    "to": "const SAVE_AS_UTF8 = '请将其另存为不带 BOM 的 UTF-8 格式。';"
+   },
+   {
+    "from": "const BINARY = notConfig(\"it's a binary file\");",
+    "to": "const BINARY = notConfig('这是一个二进制文件');"
+   },
+   {
+    "from": "const KEY = notConfig('it holds a key or certificate');",
+    "to": "const KEY = notConfig('其中包含密钥或证书');"
+   },
+   {
+    "from": "const PUBLIC_KEYS = notConfig('it holds SSH public keys, like a .pub or authorized_keys file');",
+    "to": "const PUBLIC_KEYS = notConfig('其中包含 SSH 公钥（如 .pub 或 authorized_keys 文件）');"
+   },
+   {
+    "from": "const HOST_KEYS = notConfig('it lists SSH host keys, like known_hosts');",
+    "to": "const HOST_KEYS = notConfig('其中列出的是 SSH 主机密钥（如 known_hosts 文件）');"
+   },
+   {
+    "from": "why: 'it starts with a byte-order mark',",
+    "to": "why: '文件开头带有字节顺序标记（BOM）',"
+   },
+   {
+    "from": "why: \"it's saved as UTF-16\",",
+    "to": "why: '文件保存成了 UTF-16 编码',"
+   },
+   {
+    "from": "return `${file} ${what}: ${why}. ${fix}`;",
+    "to": "return `${file} ${what}：${why}。${fix}`;"
+   }
+  ],
+  "dist/remote/sshConnection.js": [
+   {
+    "from": "return `Waiting for another window to finish installing on ${label}…`;",
+    "to": "return `正在等待另一窗口完成在 ${label} 上的安装…`;"
+   },
+   {
+    "from": "return `Replacing an invalid server binary on ${label}…`;",
+    "to": "return `正在替换 ${label} 上无效的服务端程序…`;"
+   },
+   {
+    "from": "return `Downloading the Antigravity server on ${label}…`;",
+    "to": "return `正在 ${label} 上下载 Antigravity 服务器…`;"
+   },
+   {
+    "from": "return `Installed the Antigravity server on ${label}.`;",
+    "to": "return `已在 ${label} 上安装 Antigravity 服务器。`;"
+   },
+   {
+    "from": "return `Starting the Antigravity server on ${label}…`;",
+    "to": "return `正在启动 ${label} 上的 Antigravity 服务器…`;"
+   },
+   {
+    "from": "return `Connecting to the running server on ${label}…`;",
+    "to": "return `正在连接 ${label} 上运行中的服务器…`;"
+   },
+   {
+    "from": "return `Restarting the Antigravity server on ${label}…`;",
+    "to": "return `正在重启 ${label} 上的 Antigravity 服务器…`;"
+   },
+   {
+    "from": "return `Checking whether another host still runs your Antigravity server…`;",
+    "to": "return `正在检查是否仍有其他主机在运行你的 Antigravity 服务器…`;"
+   },
+   {
+    "from": "return `Moving the Antigravity server to ${label}…`;",
+    "to": "return `正在将 Antigravity 服务器迁移到 ${label}…`;"
+   }
+  ],
+  "dist/remote/signInCallback.js": [
+   {
+    "from": "const host = escapeHtml(opts.hostLabel ?? 'the SSH host');",
+    "to": "const host = escapeHtml(opts.hostLabel ?? 'SSH 主机');"
+   },
+   {
+    "from": "const SIGNED_IN = page('You have successfully authenticated.', 'You can close this tab and return to Antigravity.');",
+    "to": "const SIGNED_IN = page('身份验证成功。', '现在可以关闭此标签页并返回 Antigravity。');"
+   },
+   {
+    "from": "return page(\"Sign-in didn't finish\", `Antigravity couldn't reach ${host} to finish signing in. ` +\n        'Sign in again from Antigravity.');",
+    "to": "return page('登录未完成', `Antigravity 无法连接 ${host} 以完成登录，请返回 Antigravity 重新发起登录。`);"
+   },
+   {
+    "from": "return page(\"Sign-in didn't finish\", 'This sign-in came back from another server than the sign-in page you ' +\n        `agreed to, so Antigravity didn't pass it on to ${host}.`);",
+    "to": "return page('登录未完成', `此次登录回调来自与你确认的登录页面不一致的服务器，因此 Antigravity 未将其转发给 ${host}。`);"
+   },
+   {
+    "from": "return page(\"Sign-in didn't finish\", `Antigravity on ${host} couldn't finish signing in (HTTP ${status}). ` +\n        'Sign in again from Antigravity.');",
+    "to": "return page('登录未完成', `${host} 上的 Antigravity 未能完成登录（HTTP ${status}），请返回 Antigravity 重新发起登录。`);"
+   }
+  ],
+  "dist/remote/sshBridge.js": [
+   {
+    "from": "const BAD_CONFIG_FILE = 'The SSH config file must be a path of at most 4 KiB.';",
+    "to": "const BAD_CONFIG_FILE = 'SSH 配置文件路径长度不得超过 4 KiB。';"
+   },
+   {
+    "from": "message: 'Enter an SSH host, for example \"devbox\" or \"user@host\".',",
+    "to": "message: '请输入 SSH 主机，例如“devbox”或“user@host”。',"
+   }
+  ],
+  "dist/remote/sshErrorText.js": [
+   {
+    "from": "return `Error code: ${err.code}\\nLogs: ${logPath()}`;",
+    "to": "return `错误代码：${err.code}\\n日志：${logPath()}`;"
+   },
+   {
+    "from": "return err.reportedByRemote ? `${label} reported: ${text}` : text;",
+    "to": "return err.reportedByRemote ? `${label} 返回：${text}` : text;"
+   },
+   {
+    "from": ": 'The connection was closed before it finished.';",
+    "to": ": '连接在完成前已关闭。';"
+   },
+   {
+    "from": "return `Windows SSH hosts aren't supported yet. ${sshArgs_1.LINUX_HOST_NEEDED}`;",
+    "to": "return `暂不支持 Windows SSH 主机。${sshArgs_1.LINUX_HOST_NEEDED}`;"
+   },
+   {
+    "from": "return pointsToLog ? `${text}\\nLogs: ${logPath()}` : text;",
+    "to": "return pointsToLog ? `${text}\\n日志：${logPath()}` : text;"
+   }
+  ],
+  "dist/remote/sshArgs.js": [
+   {
+    "from": "throw new types_1.RemoteError('INVALID_DESTINATION', 'Invalid SSH config file.');",
+    "to": "throw new types_1.RemoteError('INVALID_DESTINATION', 'SSH 配置文件无效。');"
+   },
+   {
+    "from": "exports.LINUX_HOST_NEEDED = 'Antigravity needs a Linux host on x64 or arm64 with glibc 2.26 or newer.';",
+    "to": "exports.LINUX_HOST_NEEDED = 'Antigravity 需要运行在 x64 或 arm64 架构且 glibc 2.26 及以上版本的 Linux 主机上。';"
+   },
+   {
+    "from": "return `Couldn't connect to the SSH host (${String(code)}).`;",
+    "to": "return `无法连接到 SSH 主机（${String(code)}）。`;"
+   },
+   {
+    "from": "yes: 'SSH authentication failed. Check your password, code or keys, then try again.',",
+    "to": "yes: 'SSH 身份验证失败。请检查密码、验证码或密钥后重试。',"
+   },
+   {
+    "from": "onReconnect: 'SSH authentication failed. Click Reconnect to sign in again.',",
+    "to": "onReconnect: 'SSH 身份验证失败。请点击“重新连接”重新登录。',"
+   },
+   {
+    "from": "no: \"SSH authentication failed. Antigravity can't answer password or code prompts on Windows yet: set up key-based login with ssh-agent, then try again.\",",
+    "to": "no: 'SSH 身份验证失败。Windows 版 Antigravity 暂不支持交互式输入密码或验证码，请使用 ssh-agent 配置密钥登录后重试。',"
+   },
+   {
+    "from": "return \"That SSH host isn't valid. Enter an alias from your SSH config or a host like user@host or user@host:2222.\";",
+    "to": "return 'SSH 主机格式无效。请输入 SSH 配置中的别名，或形如 user@host、user@host:2222 的主机地址。';"
+   },
+   {
+    "from": "? \"The host's SSH key is unknown or has changed. Save it with ssh in a terminal. If it changed, ask the host's owner first: the connection may be intercepted.\"",
+    "to": "? '该主机的 SSH 密钥未知或已发生变更。请先在终端中使用 ssh 连接并保存密钥；若密钥发生了变更，请先向主机管理员核实，以防连接被劫持。'"
+   },
+   {
+    "from": ": \"The host's SSH key has changed or isn't trusted. If it changed, ask the host's owner first: the connection may be intercepted.\";",
+    "to": ": '该主机的 SSH 密钥已发生变更或不受信任。若密钥发生了变更，请先向主机管理员核实，以防连接被劫持。';"
+   },
+   {
+    "from": "return `Couldn't connect to the SSH host. Check its name, your network and ssh config (e.g. a ProxyCommand), and that ssh to it works in a terminal${prompts === 'no' ? ' without a prompt' : ''}.`;",
+    "to": "return `无法连接到 SSH 主机。请检查主机名、网络连接和 SSH 配置（如 ProxyCommand），并确认在终端中${prompts === 'no' ? '无需交互提示即可' : '能够'}正常 ssh 连接该主机。`;"
+   },
+   {
+    "from": "return \"SSH can't use your SSH config file. Fix the problem ssh reports, or choose another config file.\";",
+    "to": "return 'SSH 无法使用你的 SSH 配置文件。请修复 ssh 报告的问题，或改选其他配置文件。';"
+   },
+   {
+    "from": "return 'SSH port forwarding failed. Make sure the server allows TCP forwarding (AllowTcpForwarding) for your account, then try again.';",
+    "to": "return 'SSH 端口转发失败。请确认服务器已为你的账户开启 TCP 转发（AllowTcpForwarding）后重试。';"
+   },
+   {
+    "from": "return `The SSH host isn't supported. ${exports.LINUX_HOST_NEEDED} Windows and macOS hosts aren't supported yet.`;",
+    "to": "return `不支持此 SSH 主机。${exports.LINUX_HOST_NEEDED}暂不支持 Windows 和 macOS 主机。`;"
+   },
+   {
+    "from": "return 'Another host that shares your home directory runs the Antigravity server. Connect to that host, or connect again and choose Take Over.';",
+    "to": "return '另一台共享你主目录的主机正在运行 Antigravity 服务器。请连接到该主机，或重新连接并选择“接管”。';"
+   },
+   {
+    "from": "return \"Couldn't install the Antigravity server on the SSH host. Make sure it has free disk space, and that it or this computer can download from the internet.\";",
+    "to": "return '无法在 SSH 主机上安装 Antigravity 服务器。请确认远端磁盘空间充足，且远端主机或本机能够访问互联网进行下载。';"
+   },
+   {
+    "from": "return `The Antigravity server failed to start on the SSH host. See its log in ~/${types_1.REMOTE_INSTALL_ROOT}/data on that host.`;",
+    "to": "return `SSH 主机上的 Antigravity 服务器启动失败。请查看该主机上 ~/${types_1.REMOTE_INSTALL_ROOT}/data 目录下的日志。`;"
+   },
+   {
+    "from": "return 'The Antigravity server on the SSH host stopped. Reconnect to start it again.';",
+    "to": "return 'SSH 主机上的 Antigravity 服务器已停止，重新连接即可再次启动。';"
+   },
+   {
+    "from": "return 'The SSH connection closed. Check your network connection, then reconnect.';",
+    "to": "return 'SSH 连接已关闭。请检查网络连接后重新连接。';"
+   },
+   {
+    "from": "return 'The connection was cancelled.';",
+    "to": "return '已取消连接。';"
+   },
+   {
+    "from": "return \"Couldn't connect to the SSH host. Try ssh to it in a terminal, and see the Antigravity log for details.\";",
+    "to": "return '无法连接到 SSH 主机。请先尝试在终端中用 ssh 连接该主机，并查看 Antigravity 日志了解详情。';"
    }
   ],
   "dist/remote/sshPrompts.js": [
    {
+    "from": "const TOUCH_TITLE = 'Touch your security key';",
+    "to": "const TOUCH_TITLE = '请触碰安全密钥';"
+   },
+   {
+    "from": "(who) => (isAccount(who) ? ['Password', who] : undefined),",
+    "to": "(who) => (isAccount(who) ? ['密码', who] : undefined),"
+   },
+   {
+    "from": "(who) => (isAccount(who) ? ['Current password', who] : undefined),",
+    "to": "(who) => (isAccount(who) ? ['当前密码', who] : undefined),"
+   },
+   {
+    "from": "(who) => (isAccount(who) ? ['New password', who] : undefined),",
+    "to": "(who) => (isAccount(who) ? ['新密码', who] : undefined),"
+   },
+   {
+    "from": "(who) => (isAccount(who) ? ['Confirm new password', who] : undefined),",
+    "to": "(who) => (isAccount(who) ? ['确认新密码', who] : undefined),"
+   },
+   {
+    "from": "[\"Enter passphrase for key '\", \"':\", (key) => ['Passphrase', baseName(key)]],",
+    "to": "[\"Enter passphrase for key '\", \"':\", (key) => ['密钥口令', baseName(key)]],"
+   },
+   {
+    "from": "return ['PIN', what.slice(1, -1)];",
+    "to": "return ['PIN 码', what.slice(1, -1)];"
+   },
+   {
+    "from": "return key < 0 ? undefined : ['PIN', baseName(what.slice(key + 5))];",
+    "to": "return key < 0 ? undefined : ['PIN 码', baseName(what.slice(key + 5))];"
+   },
+   {
+    "from": "? `Trust ${hostName(host.split(' (')[0])}?`",
+    "to": "? `信任 ${hostName(host.split(' (')[0])} 吗？`"
+   },
+   {
+    "from": "? `Connect to ${hostName(host)} anyway?`",
+    "to": "? `仍要连接到 ${hostName(host)} 吗？`"
+   },
+   {
+    "from": "return 'Accept updated host keys?';",
+    "to": "return '接受更新后的主机密钥吗？';"
+   },
+   {
+    "from": "return key ? `Add ${baseName(key.split(' (')[0])} to ssh-agent?` : undefined;",
+    "to": "return key ? `要将 ${baseName(key.split(' (')[0])} 添加到 ssh-agent 吗？` : undefined;"
+   },
+   {
+    "from": "return `Question from ${who}`;",
+    "to": "return `来自 ${who} 的询问`;"
+   },
+   {
+    "from": "return `Verification code for ${who}`;",
+    "to": "return `${who} 的验证码`;"
+   },
+   {
+    "from": "return `Password for ${who}`;",
+    "to": "return `${who} 的密码`;"
+   },
+   {
+    "from": "return /\\bpin\\b/i.test(text) ? `PIN for ${who}` : `Sign in to ${who}`;",
+    "to": "return /\\bpin\\b/i.test(text) ? `${who} 的 PIN 码` : `登录 ${who}`;"
+   },
+   {
+    "from": "? `${asked[0]} for ${hostPromptsMarked ? asked[1] : label}`",
+    "to": "? `${hostPromptsMarked ? asked[1] : label} 的${asked[0]}`"
+   },
+   {
+    "from": "<p class=\"context\">Connecting to <span id=\"label\"></span></p>",
+    "to": "<p class=\"context\">正在连接到 <span id=\"label\"></span></p>"
+   },
+   {
     "from": "<div id=\"retry\" class=\"note\" hidden>Asked again: your last answer may not have worked.</div>",
-    "to": "<div id=\"retry\" class=\"note\" hidden>再次询问：你上次的回答可能没有生效。</div>"
+    "to": "<div id=\"retry\" class=\"note\" hidden>再次询问：上次输入的内容可能未通过验证。</div>"
    },
    {
-    "from": "<div id=\"long\" class=\"note\" hidden>That's too long.</div>",
-    "to": "<div id=\"long\" class=\"note\" hidden>输入太长。</div>"
+    "from": "<div id=\"long\" class=\"note\" role=\"alert\" hidden>That's too long.</div>",
+    "to": "<div id=\"long\" class=\"note\" role=\"alert\" hidden>输入内容过长。</div>"
    },
    {
-    "from": "<button id=\"cancel\">Cancel</button><button id=\"continue\">Continue</button>",
-    "to": "<button id=\"cancel\">取消</button><button id=\"continue\">继续</button>"
-   },
-   {
-    "from": "message: confirm ? `${label} asks:` : 'Touch your security key',",
-    "to": "message: confirm ? `${label} 询问：` : '请触碰你的安全密钥',"
+    "from": "<div class=\"buttons\"><button id=\"cancel\" class=\"secondary\">Cancel</button><button id=\"continue\" class=\"primary\">Continue</button></div>",
+    "to": "<div class=\"buttons\"><button id=\"cancel\" class=\"secondary\">取消</button><button id=\"continue\" class=\"primary\">继续</button></div>"
    },
    {
     "from": "buttons: confirm ? ['Yes', 'No'] : ['Cancel'],",
@@ -370,8 +775,32 @@
   ],
   "dist/remote/disconnectedPage.js": [
    {
-    "from": "const title = connecting ? 'Reconnecting…' : 'Disconnected';",
-    "to": "const title = connecting ? '正在重新连接…' : '已断开连接';"
+    "from": "reconnect: 'Reconnect',",
+    "to": "reconnect: '重新连接',"
+   },
+   {
+    "from": "stop: 'Stop Server',",
+    "to": "stop: '停止服务器',"
+   },
+   {
+    "from": "close: 'Close',",
+    "to": "close: '关闭',"
+   },
+   {
+    "from": "? 'Restarting…'",
+    "to": "? '正在重启…'"
+   },
+   {
+    "from": "? 'Reconnecting…'",
+    "to": "? '正在重新连接…'"
+   },
+   {
+    "from": ": 'Disconnected';",
+    "to": ": '已断开连接';"
+   },
+   {
+    "from": "? `Restarting the Antigravity server on ${host}…`",
+    "to": "? `正在重启 ${host} 上的 Antigravity 服务器…`"
    },
    {
     "from": "? `Reconnecting to ${host}…`",
@@ -382,20 +811,24 @@
     "to": ": `已与 ${host} 断开连接`;"
    },
    {
-    "from": "? `Agents keep running on ${host}.`",
-    "to": "? `智能体会继续在 ${host} 上运行。`"
+    "from": "? 'This window opens it again once it has started.'",
+    "to": "? '服务器启动后，此窗口将自动重新打开。'"
+   },
+   {
+    "from": "? `Its server on ${host} stopped, and its agents with it.`",
+    "to": "? `${host} 上的服务器已停止，其智能体也已随之停止。`"
+   },
+   {
+    "from": ": `Agents keep running on ${host}.`",
+    "to": ": `智能体会继续在 ${host} 上运行。`"
+   },
+   {
+    "from": "? `Its agents on ${host} stopped with it.`",
+    "to": "? `${host} 上的智能体已随服务器停止。`"
    },
    {
     "from": ": `Agents keep running on ${host} unless its server stopped.`;",
-    "to": ": `除非 ${host} 上的服务器已停止，否则智能体会继续在那里运行。`;"
-   },
-   {
-    "from": "href=\"${action('reconnect')}\">Reconnect</a>",
-    "to": "href=\"${action('reconnect')}\">重新连接</a>"
-   },
-   {
-    "from": "href=\"${action('close')}\">Close</a>",
-    "to": "href=\"${action('close')}\">关闭</a>"
+    "to": ": `除非 ${host} 上的服务器已停止，否则智能体会继续在远端运行。`;"
    }
   ],
   "dist/ideInstall/wizardHtml.js": [
@@ -405,15 +838,15 @@
    },
    {
     "from": ">Setting up…</div>",
-    "to": ">正在设置…</div>"
+    "to": ">正在初始化…</div>"
    },
    {
     "from": "<h1>Welcome to the new Antigravity!</h1>",
-    "to": "<h1>欢迎使用全新的 Antigravity！</h1>"
+    "to": "<h1>欢迎使用新版 Antigravity！</h1>"
    },
    {
     "from": "<p>Antigravity has been redesigned to put agents first with new capabilities. If you'd still like a code editor, you can download it as a separate app named <b>Antigravity IDE</b>.</p>",
-    "to": "<p>Antigravity 经过重新设计，以智能体为核心，并加入了新功能。如果你仍需要代码编辑器，可以单独下载名为 <b>Antigravity IDE</b> 的应用。</p>"
+    "to": "<p>Antigravity 已焕新升级，全面围绕智能体打造。如果你仍需要代码编辑器，可单独下载 <b>Antigravity IDE</b> 应用。</p>"
    },
    {
     "from": "<span>Download the Antigravity IDE</span>",
@@ -421,7 +854,7 @@
    },
    {
     "from": "id=\"btn-skip\">Explore the new Antigravity</button>",
-    "to": "id=\"btn-skip\">探索全新的 Antigravity</button>"
+    "to": "id=\"btn-skip\">开始探索新版 Antigravity</button>"
    }
   ]
  }

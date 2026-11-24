@@ -184,8 +184,29 @@ if (!buildRoot && !args['no-rename'] && fs.existsSync(p.asar)) {
     fs.rmSync(p.asarBak, { force: true }); // left over from the previous version
     log('已删除旧版本留下的 app.asar.bak');
   }
-  fs.renameSync(p.asar, p.asarBak);
-  log(`已把 app.asar 改名为 app.asar.bak（原文件另备份在 ${backup}）`);
+  const tryRenameAsar = () => {
+    try {
+      fs.renameSync(p.asar, p.asarBak);
+      log(`已把 app.asar 改名为 app.asar.bak（原文件另备份在 ${backup}）`);
+      return true;
+    } catch (err) {
+      if (err && (err.code === 'EBUSY' || err.code === 'EPERM')) return false;
+      throw err;
+    }
+  };
+  if (!tryRenameAsar()) {
+    if (args.wait) {
+      log('检测到 Antigravity 当前正从 app.asar 运行并占用该文件。请关闭所有 Antigravity 窗口，脚本将在关闭后自动完成切换…');
+      while (fs.existsSync(p.asar)) {
+        await new Promise((r) => setTimeout(r, 300));
+        if (tryRenameAsar()) break;
+      }
+    } else {
+      warn('resources\\app 汉化文件已生成完毕（原文件已备份在 ' + backup + '），但当前 Antigravity 正从更新后的 app.asar 运行并锁定了该文件，无法在运行中直接将 app.asar 改名为 app.asar.bak。');
+      warn('请先关闭 Antigravity，再运行一次 apply.cmd 完成最后一步切换。');
+      process.exit(2);
+    }
+  }
 }
 
 if (!buildRoot) process.exitCode = printStatus();

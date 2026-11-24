@@ -3,7 +3,7 @@
 //   --missing  keep only strings that dict/hub.json does not have yet (after an update)
 import fs from 'node:fs';
 const [, , input, output, flag] = process.argv;
-const norm = (x) => x.replace(/s+/g, ' ').trim();
+const norm = (x) => x.replace(/\s+/g, ' ').trim();
 const known = flag === '--missing'
   ? new Set(Object.keys(JSON.parse(fs.readFileSync(new URL('../dict/hub.json', import.meta.url), 'utf8')).entries).map(norm))
   : new Set();
