@@ -1,8 +1,8 @@
 # Antigravity 简体中文汉化
 
-给 **Windows / macOS** 桌面端 **Antigravity**（Windows 默认路径 `%LOCALAPPDATA%\Programs\antigravity`，macOS 默认路径 `/Applications/Antigravity.app`，当前适配 **2.35.2**）提供**一键简体中文部署**，免重打包 `app.asar`，一次执行同时完成：
+给 **Windows / macOS** 桌面端 **Antigravity**（Windows 默认路径 `%LOCALAPPDATA%\Programs\antigravity`，macOS 默认路径 `/Applications/Antigravity.app`，当前适配 **2.36.0**）提供**一键简体中文部署**，免重打包 `app.asar`，一次执行同时完成：
 
-1. **客户端界面简体中文汉化**：覆盖主界面（3,459 条）与主进程菜单/托盘/弹窗（209 条）；
+1. **客户端界面简体中文汉化**：覆盖主界面（3,647 条）与主进程菜单/托盘/弹窗（209 条）；
 2. **全局简体中文交互规则插件（`zh-cn-language`）**：自动安装到 `~/.gemini/config/plugins/zh-cn-language`（Windows 为 `%USERPROFILE%\.gemini\config\plugins\zh-cn-language`），约束 Agent 的日常回复、`ask_question` 提问卡片、`run_command` 授权摘要（`toolSummary`）与 Artifacts 文档统一使用简体中文。
 
 应用自动更新后重新运行一次脚本即可恢复界面中文。
@@ -57,7 +57,7 @@ antigravity-zh/
 │       ├── README.md
 │       └── rules/AGENTS.md
 ├── dict/
-│   ├── hub.json                                     # 主界面词典（3,459 条）
+│   ├── hub.json                                     # 主界面词典（3,647 条）
 │   ├── main.json                                    # 主进程替换规则（209 条）
 │   ├── swarm.json                                   # Swarm 协作面板词典（225 条）
 │   └── glossary.md                                  # 术语统一约定
@@ -93,7 +93,7 @@ Antigravity 自动更新会写回新的 `app.asar` 并覆盖加载优先级，�
 
 ## 覆盖范围
 
-- **主界面（`dict/hub.json`，3,459 条）**：侧栏与自定义侧边栏/筛选排序（含收件箱/已处理模式、运行中分组与移动对话）、首页、输入区、标题栏菜单、命令面板、对话内联权限与提问卡片、云端对话与智能体创建、远程项目克隆、设置各页（常规、应用、外观、快捷键、Orchestrator 设置与模型选择、通知、模型、内置浏览器与站点数据、账户、反馈）、自定义（插件市场、插件包、插件权限撤销与管理）、自动化及筛选校验、权限、语音听写语言、终端、审查与浏览器等文案。支持 `{0}` 动态占位模板及 `<0>` 内联子元素整句模板。
+- **主界面（`dict/hub.json`，3,647 条）**：侧栏与自定义侧边栏/筛选排序（含收件箱/已处理模式、运行中分组与移动对话）、动态流（Feeds）与交付物分屏、首页、输入区、对话内搜索与话题回复、标题栏菜单、命令面板、对话内联权限与提问卡片、云端对话与智能体创建、远程项目克隆与工作树派生、环境变量与网络密钥、设置搜索与设置各页（常规、应用、外观、快捷键、Orchestrator 设置与模型选择、通知、模型、内置浏览器与站点数据、账户、反馈）、自定义（插件市场、插件包、插件权限撤销与管理）、自动化及筛选校验、权限、语音听写语言、终端、审查与浏览器等文案。支持 `{0}` 动态占位模板及 `<0>` 内联子元素整句模板。
 - **主进程（`dict/main.json`，209 条）**：应用菜单、托盘菜单、退出确认、启动错误、文件选择框、检查更新、设备与通行密钥选择、SSH 远程连接流程、WSL 提示及欢迎向导。
 - **Swarm 协作面板（`dict/swarm.json`，225 条）**：概览启动引导、看板筛选与消息操作、成员与工作线状态、关系图/蜂巢视图回放、GIF 导出与原始数据工具栏（通过主进程 `did-frame-finish-load` 仅注入 Swarm iframe，不改动 `builtin/` 文件与校验和）。
 - **Agent 对话与卡片（`plugins/zh-cn-language`）**：日常回复、`ask_question` 提问卡片、`run_command` 授权摘要（`toolSummary`）、Artifacts 工件及子代理角色名统一使用简体中文，同时保留代码标识符、路径、命令与通用英文专有名词。

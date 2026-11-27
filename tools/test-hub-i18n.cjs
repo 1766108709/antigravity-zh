@@ -202,6 +202,13 @@ const cases = [
   ["Your plan's baseline quota will refresh on 2026/12/2 14:45:58. To continue using this model now, enable AI Credit overages.", '你当前方案的基础配额将于 2026/12/2 14:45:58 刷新。如需立即继续使用此模型，请启用 AI 积分超额使用。'],
   ["You need at least 25 AI Credits to send messages. To continue using this model now, purchase more AI Credits. Your plan's baseline quota will refresh on 2026/12/2 14:45:58.", '发送消息至少需要 25 AI 积分。如需立即继续使用 此模型，请购买更多 AI 积分。你当前方案的基础配额将于 2026/12/2 14:45:58 刷新。'],
   ['Your quota for Gemini 4 Neon will reset on 2026/12/2 14:45:58. Switch to another available model to continue.', 'Gemini 4 Neon 的配额将于 2026/12/2 14:45:58 重置，请切换其他可用模型继续对话。'],
+  ['No settings match “font”', '没有匹配“font”的设置'],
+  ['No messages matching “test” in loaded messages.', '在已加载的消息中未找到匹配“test”的内容。'],
+  ['Searching 12 loaded messages — older history available', '正在搜索已加载的 12 条消息 — 可加载更早历史'],
+  ['2 agents are working quietly in the background. Anything that needs your input will show up here.', '2 个智能体正在后台静默运行。需要你介入的内容会显示在这里。'],
+  ['Show all (3 hidden)', '显示全部（已隐藏 3 项）'],
+  ['Reset (2 cleared)', '重置（已清除 2 项）'],
+  ['3 tasks running', '3 个任务运行中'],
 ];
 
 let bad = 0;
