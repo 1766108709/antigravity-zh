@@ -149,6 +149,7 @@
     ['using this MCP tool', '使用此 MCP 工具'],
     ['a one-time administrator (UAC) elevation', '一次性管理员（UAC）提权'],
     ['access to this resource', '访问此资源'],
+    ['this model', '此模型'],
   ]);
 
   const UNITS = { year: '年', month: '个月', week: '周', day: '天', hour: '小时', minute: '分钟', min: '分钟', second: '秒', sec: '秒' };

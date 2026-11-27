@@ -199,6 +199,9 @@ const cases = [
   ['Orchestrator Settings', 'Orchestrator 设置'],
   ['Orchestrator Model', 'Orchestrator 模型'],
   ['Offloads routine steps to a faster executor. Same quality, fewer tokens used.', '将常规步骤交给更快的执行模型处理，保持同等质量的同时减少 Token 消耗。'],
+  ["Your plan's baseline quota will refresh on 2026/12/2 14:45:58. To continue using this model now, enable AI Credit overages.", '你当前方案的基础配额将于 2026/12/2 14:45:58 刷新。如需立即继续使用此模型，请启用 AI 积分超额使用。'],
+  ["You need at least 25 AI Credits to send messages. To continue using this model now, purchase more AI Credits. Your plan's baseline quota will refresh on 2026/12/2 14:45:58.", '发送消息至少需要 25 AI 积分。如需立即继续使用 此模型，请购买更多 AI 积分。你当前方案的基础配额将于 2026/12/2 14:45:58 刷新。'],
+  ['Your quota for Gemini 4 Neon will reset on 2026/12/2 14:45:58. Switch to another available model to continue.', 'Gemini 4 Neon 的配额将于 2026/12/2 14:45:58 重置，请切换其他可用模型继续对话。'],
 ];
 
 let bad = 0;
